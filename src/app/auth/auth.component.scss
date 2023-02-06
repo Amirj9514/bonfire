@@ -1,0 +1,26 @@
+.bg-img {
+    background-image: url('../../assets/loginBg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    background-color: black;
+    opacity: 0.6;
+}
+
+
+.cardSize {
+    max-width: 500px;
+}
+
+.logoSize {
+    width: 80px;
+    height: 77px;
+}

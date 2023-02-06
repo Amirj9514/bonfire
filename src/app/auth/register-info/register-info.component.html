@@ -1,0 +1,125 @@
+<div class="">
+  <div class="mb-4">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+      <div class="text-center text-secondary fs-24 fw-500">
+        <span class="">Welcome To Bonfire 👋🏻</span>
+      </div>
+      <div class="text-center text-secondary2">
+        <span class="fs-400 fw-14"
+          >Please fill your information and start the adventure
+        </span>
+      </div>
+    </div>
+  </div>
+  <form class="row" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('name')?.touched || submitted) &&
+            registerForm.get('name')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Name"
+          formControlName="name"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('name')?.touched || submitted) &&
+            registerForm.get('name')?.errors
+          "
+        >
+          Name Feild is Required
+        </small>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="number"
+          autocomplete="new-phone"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('contactNo')?.touched || submitted) &&
+            registerForm.get('contactNo')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Contact Number"
+          formControlName="contactNo"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('contactNo')?.touched || submitted) &&
+            registerForm.get('contactNo')?.errors
+          "
+        >
+          <li>Phone Number Feild is Required</li>
+          <li>Phone Number Must Contain 11 digits</li>
+        </small>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          autoComplete="new-password"
+          type="password"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('password')?.touched || submitted) &&
+            registerForm.get('password')?.errors
+              ? ' border border-danger'
+              : 'border-0'
+          "
+          placeholder="Password"
+          formControlName="password"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('password')?.touched || submitted) &&
+            registerForm.get('password')?.errors
+          "
+        >
+          Password Feild is Required
+        </small>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('rePass')?.touched || submitted) &&
+            registerForm.get('rePass')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Confirm Password"
+          formControlName="rePass"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('rePass')?.touched || submitted) &&
+            registerForm.get('rePass')?.errors
+          "
+        >
+          Confirm Password Feild is Required
+        </small>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button class="btn bg-primary mt-3 rounded-12 w-100 text-light py-2">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

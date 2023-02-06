@@ -1,0 +1,68 @@
+<div>
+  <div class="search">
+    <fa-icon class="fa-search" [icon]="searchIcon"></fa-icon>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search products here...."
+    />
+  </div>
+
+  <div class="container-fluid" id="data">
+    <div id=""></div>
+    <div class="" *ngFor="let items of productArr">
+      <div [id]="items.name" class="my-4 fs-24 fw-500">{{ items.name }}</div>
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-6 col-xxl-4 my-3"
+          *ngFor="let menu of items.menuList"
+        >
+          <div class="card glassEffect1 h-100" (mouseenter)="cardData(items)">
+            <div class="card-header imgSize m-0 p-0">
+              <img
+                class="fluid-img h-100 w-100"
+                [src]="imgUrl + '1219/' + 'images/' + menu.image"
+              />
+            </div>
+            <div class="card-body m-0 p-0 py-3">
+              <div class="row justify-content-between align-items-start">
+                <div class="col-9 d-flex flex-column">
+                  <span class="fs-20 fw-500">{{ menu.name }}</span>
+                  <span class="fs-14 fw-400 text-secondary2">{{
+                    menu.ingridient
+                  }}</span>
+                </div>
+                <div class="col-3 text-end">
+                  <span class="px-2 py-1 bg-secondary rounded-3 pointer">
+                    <fa-icon class="text-light" [icon]="heartIcon"></fa-icon>
+                  </span>
+                </div>
+
+                <div class="col-12 my-2 d-flex align-items-center">
+                  <div
+                    class="px-3 py-1 bg-primary2 rounded-25 text-light fs-14 fw-400"
+                  >
+                    Rs.
+                    <span>{{ menu.price }}</span>
+                    <!-- <small class="text-decoration-line-through ms-2">{{
+                      menu.price
+                    }}</small> -->
+                  </div>
+                </div>
+                <div class="col-12 my-2">
+                  <button
+                    class="btn btn-primary w-100 text-light d-flex align-items-center justify-content-center rounded-25 py-2"
+                    (click)="addToCart(menu)"
+                  >
+                    <img src="../../../assets/cartIcon.svg" />
+                    <span class="ms-2 fs-14 fw-400"> Add To Cart</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

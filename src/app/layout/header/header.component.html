@@ -1,0 +1,235 @@
+<nav
+  class="d-flex justify-content-between align-items-center nav_bar px-4 fixed-top glassEffect1"
+>
+  <div>
+    <img class="img-fluid" src="../../../assets/Logo.png" />
+  </div>
+  <div
+    class="d-flex align-items-center px-4 py-2 rounded-pill bg-light location_btn pointer"
+    (click)="open(content)"
+  >
+    <div class="me-3">
+      <img src="../.././../assets/location.svg" />
+    </div>
+    <div class="d-flex flex-column">
+      <div class="text-secondary">Deliver to</div>
+      <div class="text-secondary2">Main Market , Lahore</div>
+    </div>
+  </div>
+  <div class="rightSide d-flex">
+    <button class="btn bg-primary2 text-light me-2 login_btn">
+      <fa-icon [icon]="loginIcon" class=""></fa-icon>
+      <span class="ms-2">Sign in / Register</span>
+    </button>
+    <button
+      class="btn btn-primary text-light cart_btn d-flex justify-content-center align-items-center position-relative"
+      (click)="openCart(cart)"
+    >
+      <img src="../../../assets/cartIcon.svg" />
+      <span class="ms-2 text">View Cart</span>
+      <span
+        class="position-absolute start-100 translate-middle badge rounded-pill bg-primary2"
+        style="top: 10px"
+      >
+        {{ cartData.length }}
+        <!-- <span class="visually-hidden">unread messages</span> -->
+      </span>
+    </button>
+
+    <button class="menu_btn btn btn-s text-light">
+      <fa-icon [icon]="menuIcon"></fa-icon>
+    </button>
+  </div>
+</nav>
+
+<!-- buttom Cart Nav-->
+
+<div
+  class="justify-content-between align-items-center px-3 py-2 cart_nav text-light"
+  (click)="openCart(cart)"
+>
+  <div class="d-flex flex-column">
+    <span>1 item</span>
+    <span>Rs. 634.00</span>
+  </div>
+  <div>
+    <span>View Cart</span>
+    <span>></span>
+  </div>
+</div>
+
+<!-- Location Model -->
+<ng-template #content let-modal class="p-2">
+  <form class="p-2">
+    <div class="d-flex justify-content-center w-100">
+      <img class="img-fluid" src=".././../../assets/Logo.png" />
+    </div>
+    <div
+      class="d-flex flex-column align-items-center justify-content-center my-3"
+    >
+      <span class="fs-20 fw-700">Select your Order Type</span>
+      <div class="d-flex mt-2">
+        <div class="px-3 py-2 rounded-pill activeOrderType">Delivery</div>
+        <div class="px-3 py-2 rounded-pill bg-none text-dark">Pick-Up</div>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-column align-items-center justify-content-center mb-3"
+    >
+      <span class="fs-20 fw-700">Please Select Your Location</span>
+      <span class="fs-12 fw-400">Currently Selected Location</span>
+      <div
+        class="px-3 py-1 mt-2 fs-16 fw-400 bg-primary2 rounded-pill text-light"
+      >
+        Main Market , Lahore
+      </div>
+    </div>
+
+    <div>
+      <div class="mb-3">
+        <select class="form-select" aria-label="Default select example ">
+          <option selected>Select City</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <select class="form-select" aria-label="Default select example ">
+          <option selected>Select Location</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary w-100">Let's Go get some Food</button>
+    </div>
+  </form>
+</ng-template>
+
+<!-- Cart Data -->
+
+<ng-template #cart let-offcanvas>
+  <div class="offcanvas-header border-bottom">
+    <h4 class="offcanvas-title" id="offcanvas-basic-title">Cart</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="offcanvas.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="offcanvas-body overflow-auto">
+    <div class="d-flex justify-content-center align-items-center mb-3">
+      <div
+        class="fs-16 fw-400"
+        [ngClass]="orderType ? 'text-secondary2' : 'text-primary2'"
+      >
+        Delivery
+      </div>
+      <label class="label mx-2">
+        <div class="toggle">
+          <input
+            class="toggle-state"
+            type="checkbox"
+            name="check"
+            [checked]="orderType"
+            (change)="changeOrderType()"
+          />
+          <div class="indicator"></div>
+        </div>
+      </label>
+      <div
+        class="fs-16 fw-400"
+        [ngClass]="orderType ? 'text-primary2' : 'text-secondary2'"
+      >
+        Pickup
+      </div>
+    </div>
+
+    <div
+      *ngFor="let data of cartData; let i = index"
+      class="card mt-2 border-0 rounded-0 ctmCard px-3"
+    >
+      <div class="row pb-3 align-items-center">
+        <div class="col-2 m-0 p-0">
+          <img src="../../../assets/IMAGE (1).png" height="54px" width="54px" />
+        </div>
+        <div class="col-10">
+          <div class="row mb-2 align-items-start">
+            <div class="col-9 d-flex flex-column">
+              <span class="fs-14 fw-500">{{ data?.menu_name }}</span>
+              <span
+                *ngIf="data.menu_ingridient"
+                class="fs-12 fw-400 text-secondary2"
+                >{{ data.menu_ingridient }}</span
+              >
+            </div>
+            <div
+              class="col-3 d-flex justify-content-evenly m-0 p-0 align-items-center text-light"
+            >
+              <fa-icon
+                class="rounded px-1 bg-primary pointer fs-12"
+                [icon]="removeIcon"
+                (click)="decreaseQyt(i)"
+              ></fa-icon>
+              <div class="text-secondary">{{ data?.menu_qty }}</div>
+              <fa-icon
+                (click)="increaseQyt(i)"
+                class="rounded px-1 bg-primary pointer fs-12"
+                [icon]="addIcon"
+                >+</fa-icon
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex justify-content-between">
+              <span class="text-secondary2 fs-12 fw-600">{{
+                data?.menu_price
+              }}</span>
+              <span
+                (click)="removeItem(i)"
+                class="text-primary2 pointer fs-12 fw-400"
+                >Remove</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-flex justify-content-between align-items-center fs-12 fw-400"
+      ></div>
+    </div>
+  </div>
+  <div class="offcanvas-footer dashed-border px-3 py-2">
+    <div class="d-flex flex-column my-1">
+      <div class="d-flex justify-content-between fs-14 fw-500">
+        <span> Total Items</span>
+        <span>{{ cartData.length }}</span>
+      </div>
+      <div class="d-flex justify-content-between fs-14 fw-500">
+        <span> SubTotal</span>
+        <span>{{ subTotal }}</span>
+      </div>
+      <div class="d-flex justify-content-between fs-14 fw-500 mb-2">
+        <span>Delivery Fee</span>
+        <span>Rs. 100</span>
+      </div>
+      <div
+        class="d-flex justify-content-between fs-16 fw-500 mb-1 text-success"
+      >
+        <span>Total</span>
+        <span>Rs. 634</span>
+      </div>
+      <div class="mx-2">
+        <button
+          class="btn btn-primary w-100 text-light fs-20 fw-600 rounded-pill text-uppercase"
+        >
+          Go To heckout
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

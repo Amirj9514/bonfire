@@ -1,0 +1,45 @@
+<div
+  class="bg-img d-flex justify-content-center align-items-center"
+  style="position: relative; min-height: 100vh"
+>
+  <div class="overlay"></div>
+
+  <div class="card glassEffect2 rounded-25 my-3 mx-3 w-100 cardSize">
+    <div
+      class="card-header border-0 bg-transparent d-flex flex-column align-items-center justify-content-center"
+    >
+      <div class="logoSize">
+        <img class="w-100 h-100" src="../../assets/Logo.png" />
+      </div>
+
+      <div
+        [ngClass]="
+          checkRoute === '/auth/opt'
+            ? 'd-none'
+            : '' || checkRoute === '/auth/register-info'
+            ? 'd-none'
+            : ''
+        "
+        class="w-100 rounded-12 bg-light mt-3 py-2 px-4 d-flex justify-content-center"
+      >
+        <button
+          [routerLinkActive]="'bg-primary text-light'"
+          class="btn w-50 rounded-12 me-2 fs-16 fw-500 py-2 text-primary"
+          routerLink="/auth/login"
+        >
+          Login
+        </button>
+        <button
+          [routerLinkActive]="'bg-primary text-light'"
+          class="btn w-50 rounded-12 fs-16 fw-500 py-2 text-primary"
+          routerLink="/auth/register"
+        >
+          Register
+        </button>
+      </div>
+    </div>
+    <div class="card-body my-3">
+      <router-outlet> </router-outlet>
+    </div>
+  </div>
+</div>

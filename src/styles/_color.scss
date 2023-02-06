@@ -1,0 +1,39 @@
+@import './variables';
+
+
+
+.text-secondary2 {
+    color: $secondaryColor2;
+}
+
+.text-primary2 {
+    color: $primaryColor2;
+}
+
+
+
+
+.bg-primary2 {
+    background-color: $primaryColor2 !important;
+}
+
+.bg-secondary2 {
+    background-color: $secondaryColor2 !important;
+}
+
+
+
+.glassEffect1 {
+    background: linear-gradient(137.53deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 99.08%) !important;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 20px rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(100px) !important;
+}
+
+
+.glassEffect2 {
+    background: linear-gradient(137.53deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.7) 99.08%);
+
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 20px rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+}

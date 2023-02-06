@@ -1,0 +1,67 @@
+<div class="">
+  <div class="mb-4">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+      <div class="text-center text-secondary fs-24 fw-500">
+        <span class="">OTP verification</span>
+      </div>
+      <div class="text-center text-secondary2">
+        <span class="fs-400 fw-14"
+          >Enter the OTP sent to example@gmail.com</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 container-fluid">
+    <div class="row">
+      <div class="col-3">
+        <div class="mb-3">
+          <input
+            #input1
+            type="text"
+            (keyup)="nextInput(1)"
+            maxlength="1"
+            [(ngModel)]="val1"
+            class="otpInput text-center rounded"
+          />
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="mb-3">
+          <input
+            #input2
+            (keyup)="nextInput(2)"
+            maxlength="1"
+            [(ngModel)]="val2"
+            type="text"
+            class="otpInput text-center rounded"
+          />
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="mb-3">
+          <input
+            #input3
+            [(ngModel)]="val3"
+            (keyup)="nextInput(3)"
+            maxlength="1"
+            type="text"
+            class="otpInput text-center rounded"
+          />
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="mb-3">
+          <input
+            #input4
+            (keyup)="nextInput(4)"
+            maxlength="1"
+            [(ngModel)]="val4"
+            type="text"
+            class="otpInput text-center rounded"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

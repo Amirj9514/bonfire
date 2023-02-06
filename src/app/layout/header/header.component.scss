@@ -1,0 +1,159 @@
+@import '../../../styles/main';
+
+.nav_bar {
+
+    .location_btn {
+        max-height: 80px;
+        overflow: hidden;
+    }
+
+    .rightSide {
+        .login_btn {
+            border-radius: 30px;
+            padding: 15px 15px;
+        }
+
+        .cart_btn {
+            border-radius: 30px;
+            padding: 15px 15px;
+        }
+
+        .menu_btn {
+            display: none;
+        }
+    }
+}
+
+.cart_nav {
+    display: none;
+}
+
+
+.ctmCard {
+    background-color: transparent;
+    border-bottom: 1.5px solid white !important;
+}
+
+.form-check-input:focus {
+    box-shadow: none;
+}
+
+
+
+// called in media-queries.scss
+
+@mixin banner--sm() {
+    .rightSide {
+        .login_btn {
+            border-radius: 50%;
+            padding: 10px 15px !important;
+
+            span {
+                display: none;
+            }
+        }
+
+        .cart_btn {
+            border-radius: 50%;
+            padding: 10px 10px !important;
+
+            .text {
+                display: none;
+            }
+        }
+    }
+}
+
+@mixin banner--md() {}
+
+@mixin banner--xs() {
+
+    .location_btn {
+        max-height: 80px;
+        overflow: hidden;
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .login_btn {
+        display: none !important;
+    }
+
+    .cart_btn {
+        display: none !important;
+    }
+
+    .menu_btn {
+        background-color: $secondaryColor2;
+        display: block !important;
+        border-radius: 50%;
+
+        padding: 10px 15px !important;
+    }
+
+    .cart_nav {
+        display: flex !important;
+        width: 100vw;
+        position: fixed;
+        bottom: 0;
+        z-index: 300;
+        background-color: red;
+    }
+
+
+}
+
+// small screen size (sm)
+
+@media (max-width: 1000px) {
+    @include banner--sm();
+}
+
+// medium screen size (md)
+
+@media (min-width: 1000px) {
+    @include banner--md();
+}
+
+@media (max-width: 500px) {
+    @include banner--xs();
+}
+
+
+
+::ng-deep {
+
+    .modal-content {
+        background: none !important;
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(20px) saturate(160%) contrast(45%) brightness(140%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(160%) contrast(45%) brightness(140%);
+
+    }
+
+    .offcanvas {
+        background: linear-gradient(137.53deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.7) 99.08%);
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 20px rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        border-radius: 25px 0px 0px 25px;
+
+
+
+
+    }
+}
+
+
+
+
+
+
+
+
+.activeOrderType {
+    background-color: $primaryColor2;
+    color: $whiteColor
+}

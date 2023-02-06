@@ -1,0 +1,16 @@
+@import './variables';
+
+.rounded-25 {
+    border-radius: 25px !important;
+}
+
+.rounded-12 {
+    border-radius: 12px !important;
+}
+
+
+
+
+.dashed-border {
+    border-top: 2px dashed $whiteColor;
+}
