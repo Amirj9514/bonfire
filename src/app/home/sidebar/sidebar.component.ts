@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
 
   activeCat: any;
   allCategories: any[] = [];
+  fullScroll: any;
   private fragment: any = null;
   constructor(
     private SharedD: SharedService,
@@ -61,9 +62,16 @@ export class SidebarComponent implements OnInit {
   }
 
   @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
+    this.fullScroll = document.getElementById('data')?.scrollHeight;
     if (window.pageYOffset > 400) {
+      console.log('hello');
+
       this.offsetFlag = false;
     } else {
+      this.offsetFlag = true;
+    }
+
+    if (window.pageYOffset > this.fullScroll) {
       this.offsetFlag = true;
     }
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,HostListener, OnInit } from '@angular/core';
 import { SharedService } from '../shared/services/shared.service';
 
 @Component({
@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getAllMenu();
   }
+
+ 
   getAllMenu() {
     this.sharedS
       .sendPostRequest('WebAppMainData?branch_id=1219&app_id=1', null, null)

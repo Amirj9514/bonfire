@@ -17,6 +17,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../checkout/checkout.module').then((m) => m.CheckoutModule),
       },
+      {
+        path: 'history',
+        loadChildren: () =>
+          import('../order-history/order-history.module').then(
+            (m) => m.OrderHistoryModule
+          ),
+      },
     ],
   },
 ];

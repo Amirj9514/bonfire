@@ -52,17 +52,13 @@ export class ProductPageComponent implements OnInit {
         if (res.restaurantDetail !== undefined) {
           this.productArr = res.restaurantDetail.lstCategory;
           if (res !== res.cart) {
-            if (res.cart.length !== this.menuArr.length) {
+            if (res.cart?.length !== this.menuArr?.length) {
               this.menuArr = res.cart;
             }
           }
         }
       },
     });
-  }
-
-  @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
-    console.log(document.getElementById('data')?.scrollHeight);
   }
 
   cardData(data: any) {

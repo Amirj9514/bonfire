@@ -1,0 +1,159 @@
+<div class="">
+  <div class="my-4">
+    <span class="fs-32 fw-500">Past Orders</span>
+  </div>
+  <!-- <div class="card glassEffect1 border-0 rounded-25">
+    <div
+      class="card-header bg-transparent d-flex justify-content-between align-items-center py-3 overflow-hidden"
+    >
+      <div class="d-flex flex-column">
+        <div class="fs-24 fw-500 text-secondary">Order no #2435</div>
+        <div class="fs-16 fw-400 text-secondary2">23 feb 2023, 8:43 PM</div>
+      </div>
+      <div>
+        <div class="d-flex align-items-center pointer">
+          <span class="me-2 fs-20 fw-400">View details</span>
+          <fa-icon [icon]="downIcon"></fa-icon>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-2">
+          <img
+            class="img-fluid rounded-3"
+            src="../../../assets/loginBg.png"
+            height="100px"
+            width="100px"
+          />
+        </div>
+        <div class="col-8 m-0 p-0">
+          <div class="row mb-2 align-items-start">
+            <div class="col-12 d-flex flex-column" [ngClass]="">
+              <span class="fs-14 fw-500">CHICKEN CHEESE BURGER</span>
+              <span class="fs-12 fw-400 text-secondary2"
+                >Small, Chicken, Bbq, Thin Crust</span
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex justify-content-between">
+              <span class="text-secondary2 fs-12 fw-600">1200</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+          <div class="text-end">
+            <div class="mb-2">Qyt 2</div>
+            <div class="text-primary">Rs 1600</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent overflow-hidden">
+      <div class="d-flex flex-column my-1">
+        <div class="d-flex justify-content-between fs-14 fw-500">
+          <span> Total Items</span>
+          <span>1</span>
+        </div>
+        <div class="d-flex justify-content-between fs-14 fw-500">
+          <span> SubTotal</span>
+          <span>2000</span>
+        </div>
+        <div class="d-flex justify-content-between fs-14 fw-500 mb-2">
+          <span>Delivery Fee</span>
+          <span>Rs. 100</span>
+        </div>
+        <div
+          class="d-flex justify-content-between fs-16 fw-500 mb-1 text-success"
+        >
+          <span>Total</span>
+          <span>Rs. 2000</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class=""></div>
+
+  <ngb-accordion #a="ngbAccordion" activeIds="custom-panel-1">
+    <ngb-panel id="custom-panel-1">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div
+          class="accordion-button custom-header justify-content-between"
+          [class.collapsed]="!opened"
+        >
+          <div class="d-flex flex-column">
+            <div class="fs-24 fw-500 text-secondary">Order no #2435</div>
+            <div class="fs-16 fw-400 text-secondary2">23 feb 2023, 8:43 PM</div>
+          </div>
+          <button
+            ngbPanelToggle
+            class="btn border-0 d-flex align-items-center fs-16 fw-500 p-0"
+          >
+            <span class="me-2">View details</span>
+            <fa-icon [icon]="downIcon"></fa-icon>
+          </button>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="container-fluid">
+          <div class="row border-bottom pb-3 justify-content-between align-items-center">
+            <div class="col-2">
+              <img
+                class="img-fluid rounded-3"
+                src="../../../assets/loginBg.png"
+                height="100px"
+                width="100px"
+              />
+            </div>
+            <div class="col-8 m-0 p-0">
+              <div class="row mb-2 align-items-start">
+                <div class="col-12 d-flex flex-column" [ngClass]="">
+                  <span class="fs-14 fw-500">CHICKEN CHEESE BURGER</span>
+                  <span class="fs-12 fw-400 text-secondary2"
+                    >Small, Chicken, Bbq, Thin Crust</span
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-between">
+                  <span class="text-secondary2 fs-12 fw-600">1200</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+              <div class="text-end">
+                <div class="mb-2">Qyt 2</div>
+                <div class="text-primary">Rs 1600</div>
+              </div>
+            </div>
+          </div>
+
+          <div class=" mt-4 bg-transparent overflow-hidden">
+            <div class="d-flex flex-column my-1">
+              <div class="d-flex justify-content-between fs-14 fw-500">
+                <span> Total Items</span>
+                <span>1</span>
+              </div>
+              <div class="d-flex justify-content-between fs-14 fw-500">
+                <span> SubTotal</span>
+                <span>2000</span>
+              </div>
+              <div class="d-flex justify-content-between fs-14 fw-500 mb-2">
+                <span>Delivery Fee</span>
+                <span>Rs. 100</span>
+              </div>
+              <div
+                class="d-flex justify-content-between fs-16 fw-500 mb-1 text-success"
+              >
+                <span>Total</span>
+                <span>Rs. 2000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
