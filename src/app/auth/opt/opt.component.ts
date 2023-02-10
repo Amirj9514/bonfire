@@ -30,10 +30,6 @@ export class OptComponent implements OnInit {
 
   ngOnInit(): void {
     this.chgActiveForm();
-
-    let da = [1, 2, 3, 4, 5, 6];
-
-    console.log('ello', da.length);
   }
 
   ngAfterViewInit() {
@@ -70,14 +66,12 @@ export class OptComponent implements OnInit {
   confirmOtp() {
     let otp = this.val1 + this.val2 + this.val3 + this.val4;
     if (otp.length === 4) {
-      console.log('hello');
+    
     }
-    console.log();
+
   }
   chgActiveForm() {
     // this.mainS.activeRoute(this.router.url);
-
-    console.log(this.router.url);
 
     // this.router.events
     //   .pipe(filter((event) => event instanceof NavigationEnd))

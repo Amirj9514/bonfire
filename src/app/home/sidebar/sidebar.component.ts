@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
       if (fragment !== null) {
         this.activeCat = fragment;
       } else {
-        this.activeCat = data[0].name;
+        this.activeCat = data[0]?.name;
       }
     });
   }
@@ -64,7 +64,7 @@ export class SidebarComponent implements OnInit {
   @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
     this.fullScroll = document.getElementById('data')?.scrollHeight;
     if (window.pageYOffset > 400) {
-      console.log('hello');
+     
 
       this.offsetFlag = false;
     } else {

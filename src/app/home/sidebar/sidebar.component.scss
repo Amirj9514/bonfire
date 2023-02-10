@@ -55,6 +55,8 @@
     }
 }
 
+
+
 .side_bar {
     position: relative;
 
@@ -127,6 +129,9 @@
     }
 
 }
+
+
+
 
 @media (max-width: 1000px) {
     @include banner--md();

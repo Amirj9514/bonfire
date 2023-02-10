@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 
+
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent, FooterComponent],
   imports: [CommonModule, LayoutRoutingModule, SharedModule],

@@ -28,6 +28,6 @@ export class RegisterInfoComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.registerForm.get('contactNo')?.valid);
+    // console.log(this.registerForm.get('contactNo')?.valid);
   }
 }

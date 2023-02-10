@@ -12,31 +12,9 @@ export class HomeComponent implements OnInit {
   constructor(private sharedS: SharedService) {}
 
   ngOnInit(): void {
-    this.getAllMenu();
+    // this.getAllMenu();
   }
 
  
-  getAllMenu() {
-    this.sharedS
-      .sendPostRequest('WebAppMainData?branch_id=1219&app_id=1', null, null)
-      .subscribe({
-        next: (res: any) => {
-          if (res.Success !== false) {
-            this.restaurantDetail = res.Data;
-            this.storeDataToLoc();
-          }
-        },
-      });
-  }
-
-  storeDataToLoc() {
-    this.sharedS.getData().subscribe((val: any) => {
-      if (val.restaurantDetail === undefined) {
-        this.sharedS.insertData({
-          key: 'restaurantDetail',
-          val: this.restaurantDetail,
-        });
-      }
-    });
-  }
+ 
 }

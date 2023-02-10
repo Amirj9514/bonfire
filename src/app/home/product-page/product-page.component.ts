@@ -51,10 +51,12 @@ export class ProductPageComponent implements OnInit {
       next: (res: any) => {
         if (res.restaurantDetail !== undefined) {
           this.productArr = res.restaurantDetail.lstCategory;
-          if (res !== res.cart) {
-            if (res.cart?.length !== this.menuArr?.length) {
+          if (res.cart !== undefined) {
+            if (res.cart.length !== this.menuArr.length) {
               this.menuArr = res.cart;
             }
+          } else {
+            this.menuArr = [];
           }
         }
       },
@@ -75,9 +77,9 @@ export class ProductPageComponent implements OnInit {
     this.menuItems = {
       order_detail_choice: [],
       imgUrl: menu.image,
-      menu_id: menu.id,
-      menu_qty: 1,
-      menu_price: menu.price,
+      id: menu.id,
+      quantity: 1,
+      price: menu.price,
       menu_name: menu.name,
       menu_original_price: menu.price,
       menu_total_price: menu.price,
@@ -91,14 +93,17 @@ export class ProductPageComponent implements OnInit {
 
   pushDataToArr(data: any) {
     let runCon = true;
-    if (this.menuArr.length >= 1) {
-      this.menuArr.map((val: any) => {
-        if (val.menu_id === data.menu_id) {
-          val.menu_qty = val.menu_qty + 1;
-          runCon = false;
-        }
-      });
+    if (this.menuArr !== undefined) {
+      if (this.menuArr.length >= 1) {
+        this.menuArr.map((val: any) => {
+          if (val.id === data.id) {
+            val.quantity = val.quantity + 1;
+            runCon = false;
+          }
+        });
+      }
     }
+
     if (runCon === true) {
       this.menuArr.push(data);
     }

@@ -51,3 +51,14 @@
 
     }
 }
+
+@mixin banner--lg() {
+    .imgSize{
+        height: 295px !important;
+    }
+}
+
+
+@media (min-width: 1300px) {
+    @include banner--lg();
+}
