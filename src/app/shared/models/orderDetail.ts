@@ -8,9 +8,12 @@ export class NewOrder {
   public order_detail!: any;
 }
 
-export class delivery_details {
+export class Delivery_details {
   public gender!: string;
   public first_name!: string;
+  public town_id!: string;
+  public town_block_id!: number;
+  public last_name!: string;
   public email!: string;
   public mobile_no!: string;
   public address!: string;

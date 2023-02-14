@@ -4,6 +4,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [],
@@ -14,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     HttpClientModule,
     FormsModule,
+    GooglePlaceModule,
   ],
   exports: [
     FontAwesomeModule,
@@ -21,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     HttpClientModule,
     FormsModule,
+    GooglePlaceModule,
   ],
 })
 export class SharedModule {}

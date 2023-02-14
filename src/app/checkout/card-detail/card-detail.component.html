@@ -20,16 +20,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="fs-14 fw-500">
-            <th scope="row">1</th>
+          <tr class="fs-14 fw-500" *ngFor="let item of cartData; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
             <td>
               <div class="d-flex flex-column">
-                <span>FETTUCCINE PASTA WITH PRAWNS</span>
-                <small class="fs-10 fw-400">Rs. 440</small>
+                <span>{{ item.menu_name }}</span>
+                <small class="fs-10 fw-400">Rs. {{ item.price }}</small>
               </div>
             </td>
-            <td class="text-center">1</td>
-            <td class="text-end">1400</td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-end">{{ calSubTotal(item) }}</td>
           </tr>
         </tbody>
       </table>
@@ -51,6 +51,7 @@
       </div>
       <div class="d-flex flex-column">
         <button
+        (click)="placeOrder()"
           class="btn bg-primary2 text-light mb-2 rounded-pill fs-20 fw-400"
         >
           Place Order

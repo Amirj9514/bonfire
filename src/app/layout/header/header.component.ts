@@ -20,6 +20,7 @@ import {
   NgbOffcanvasConfig,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NewOrder } from 'src/app/shared/models/orderDetail';
+import { MainService } from 'src/app/shared/services/main.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { environment } from 'src/environments/environment';
 
@@ -44,27 +45,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   imageUrl: any = environment.apiImg;
 
-  orderType: any = '3';
+  orderType: any = false;
   //var for calculate total and subtoal
 
-  subTotal: any = 0;
-  deliveryFee: any = 0;
-  total: any = 0;
-
   branchForm!: FormGroup;
-
-  // modalData = {
-  //   orderType: 1,
-  //   cityId: 1,
-  //   locationId: 2,
-  // };
-
-  private newOrder = new NewOrder();
   restaurantDetail: any;
   constructor(
     private modalService: NgbModal,
     public config: NgbModalConfig,
     private sharedS: SharedService,
+    private mainS: MainService,
     configs: NgbOffcanvasConfig,
     private offcanvasService: NgbOffcanvas
   ) {
@@ -80,6 +70,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getDataFromLocal();
+
+    // Stop To Close Model if selected restaurant Branch Detail are not store in Local Storage
     if (this.dataFromLocal.restaurantDetail === undefined) {
       this.config.backdrop = 'static';
       this.config.keyboard = false;
@@ -87,14 +79,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.getAllBranches();
+    this.openModel();
   }
 
-  getAllBranches() {
+  // open Select Branch Model if restaurant Detail are not store in Local Storage
+  openModel() {
     if (this.dataFromLocal.restaurantDetail === undefined) {
       this.open(this.content3);
     }
   }
+
   // getting Data from Local Storage
   getDataFromLocal() {
     this.sharedS.getData().subscribe({
@@ -102,8 +96,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.dataFromLocal = res;
         if (res.cart !== undefined) {
           this.cartData = res.cart;
-          this.calSubtotal();
-          this.calTotal();
         }
       },
     });
@@ -111,8 +103,23 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   selectBranch() {
     if (this.branchForm.valid !== false) {
-      this.getAllMenu(this.branchForm.get('selectedBranch')?.value);
+      if (this.dataFromLocal.restaurantDetail === undefined) {
+        this.getAllMenu(this.branchForm.get('selectedBranch')?.value);
+      } else {
+        if (
+          this.dataFromLocal.restaurantDetail.id !==
+          parseInt(this.branchForm.get('selectedBranch')?.value)
+        ) {
+          this.getAllMenu(this.branchForm.get('selectedBranch')?.value);
+        } else {
+          this.modalService.dismissAll();
+        }
+      }
     }
+    this.sharedS.insertData({
+      key: 'orderTypeId',
+      val: this.branchForm.value.order_type,
+    });
   }
 
   getAllMenu(branch_id: any) {
@@ -123,7 +130,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         next: (res: any) => {
           if (res.Success !== false) {
             this.restaurantDetail = res.Data;
-
             this.storeDataToLoc();
           }
         },
@@ -135,10 +141,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       key: 'restaurantDetail',
       val: this.restaurantDetail,
     });
+
     this.sharedS.insertData({
       key: 'cart',
       val: undefined,
     });
+    this.sharedS.insertData({
+      key: 'user',
+      val: undefined,
+    });
+
     if (this.dataFromLocal.cart === undefined) {
       this.cartData = [];
     }
@@ -146,69 +158,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.modalService.dismissAll();
   }
 
-  decreaseQyt(index: any) {
-    if (this.cartData[index].quantity !== 1) {
-      this.cartData[index].quantity = this.cartData[index].quantity - 1;
-      this.sharedS.insertData({ key: 'cart', val: this.cartData });
-      this.calSubtotal();
-    }
-  }
-
-  increaseQyt(index: any) {
-    this.cartData[index].quantity = this.cartData[index].quantity + 1;
-    this.sharedS.insertData({ key: 'cart', val: this.cartData });
-    this.calSubtotal();
-    this.calTotal();
-  }
-
-  removeItem(index: any) {
-    this.cartData.splice(index, 1);
-    this.sharedS.insertData({ key: 'cart', val: this.cartData });
-    this.calSubtotal();
-    this.calTotal();
-  }
-
-  calSubtotal() {
-    let tota = 0;
-    this.cartData.map((item: any) => {
-      var subTotal = 0;
-      subTotal = parseInt(item.price) * parseInt(item.quantity) + subTotal;
-      tota = tota + subTotal;
-    });
-    this.subTotal = tota;
-  }
-  calTotal() {
-    this.total = this.subTotal + this.deliveryFee;
-  }
-
-  changeOrderType() {
-    this.orderType = !this.orderType;
-  }
-
   // Function On Submit Of Form Of  Select Branch Model
 
   selectOrderType(data: any) {
-    this.orderType = data;
     this.branchForm.get('order_type')?.setValue(data);
-  }
-
-  placeOrder() {
-    this.newOrder = {
-      user_id: '',
-      branch_id: '',
-      order_type_id: '',
-      sub_total: this.subTotal,
-      total: this.total,
-      delivery_details: {},
-      order_detail: [],
-    };
-    // this.checkAuth()
-  }
-
-  checkAuth() {
-    this.sharedS.getData().subscribe({
-      next: (res: any) => {},
-    });
   }
 
   // location Modal open Function
@@ -240,15 +193,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   // cart open funvtion
 
-  openCart(cart: any) {
-    // this.calSubtotal();
-    this.offcanvasService
-      .open(cart, { ariaLabelledBy: 'offcanvas-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {}
-      );
+  openCart() {
+    this.mainS.showCart(true);
   }
 }

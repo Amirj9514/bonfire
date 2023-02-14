@@ -1,121 +1,183 @@
 <div>
-  <!-- Personal Info -->
-  <div class="card rounded-25 glassEffect1">
-    <div class="card-header bg-transparent border-0">
-      <div class="d-flex align-items-center my-2">
-        <div
-          class="px-3 text-light fs-24 fw-400 rounded-3 py-1 bg-primary me-3"
-        >
-          1
-        </div>
-        <div class="fs-24 fw-500">Personal Info</div>
-      </div>
-    </div>
-    <div class="card-body row">
-      <div class="col-12">
-        <div class="mb-3">
-          <input
-            type="email"
-            class="form-control rounded"
-            placeholder="Email Address *"
-          />
+  <form [formGroup]="checkoutForm">
+    <!-- Personal Info -->
+    <div class="card rounded-25 glassEffect1">
+      <div class="card-header bg-transparent border-0">
+        <div class="d-flex align-items-center my-2">
+          <div
+            class="px-3 text-light fs-24 fw-400 rounded-3 py-1 bg-primary me-3"
+          >
+            1
+          </div>
+          <div class="fs-24 fw-500">Personal Info</div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="mb-3">
-              <input
-                type="text"
-                class="form-control rounded"
-                placeholder="First Name *"
-              />
+      <div class="card-body row">
+        <div class="col-12">
+          <div class="mb-3">
+            <input
+              type="email"
+              class="form-control rounded"
+              placeholder="Email Address *"
+              formControlName="email"
+            />
+
+            <small
+              class="text-danger p4 m-0 p-0"
+              *ngIf="
+                (checkoutForm.get('email')?.touched || formSubmited) &&
+                checkoutForm.get('email')?.errors
+              "
+            >
+              Email Feild is Required
+            </small>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="First Name *"
+                  formControlName="firstName"
+                />
+                <small
+                  class="text-danger p4 m-0 p-0"
+                  *ngIf="
+                    (checkoutForm.get('firstName')?.touched || formSubmited) &&
+                    checkoutForm.get('firstName')?.errors
+                  "
+                >
+                  Please Enter your First Name
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="Last Name *"
+                  formControlName="lastName"
+                />
+                <small
+                  class="text-danger p4 m-0 p-0"
+                  *ngIf="
+                    (checkoutForm.get('lastName')?.touched || formSubmited) &&
+                    checkoutForm.get('lastName')?.errors
+                  "
+                >
+                  Please Enter your Last Name
+                </small>
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="mb-3">
-              <input
-                type="text"
-                class="form-control rounded"
-                placeholder="Last Name *"
-              />
+        </div>
+        <div class="col-12">
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control rounded"
+              placeholder="Mobile Number *"
+              formControlName="mobile_no"
+            />
+            <small
+              class="text-danger p4 m-0 p-0"
+              *ngIf="
+                (checkoutForm.get('mobile_no')?.touched || formSubmited) &&
+                checkoutForm.get('mobile_no')?.errors
+              "
+            >
+              <li>Phone Number Feild is Required</li>
+              <li>Phone Number Must Contain 11 digits</li>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Location Info -->
+    <div class="card rounded-25 glassEffect1 mt-5">
+      <div class="card-header bg-transparent border-0">
+        <div class="d-flex align-items-center my-2">
+          <div
+            class="px-3 text-light fs-24 fw-400 rounded-3 py-1 bg-primary me-3"
+          >
+            2
+          </div>
+          <div class="fs-24 fw-500">Address Info</div>
+        </div>
+      </div>
+      <div class="card-body row">
+        <div class="col-12">
+          <div class="mb-3">
+            <input
+              class="form-control"
+              ngx-google-places-autocomplete
+              [options]="options"
+              (onAddressChange)="handleAddressChange($event)"
+            />
+            <small
+              class="text-danger p4 m-0 p-0"
+              *ngIf="
+                (checkoutForm.get('latitude')?.touched || formSubmited) &&
+                checkoutForm.get('latitude')?.errors
+              "
+            >
+              Please select your address
+            </small>
+          </div>
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control rounded"
+              placeholder="Street Address (Optional)"
+              formControlName="address"
+            />
+          </div>
+          <div class="mb-3">
+            <textarea
+              class="form-control"
+              placeholder="Notes"
+              aria-label="With textarea"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Info -->
+
+    <div class="card rounded-25 glassEffect1 mt-5">
+      <div class="card-header bg-transparent border-0">
+        <div class="d-flex align-items-center my-2">
+          <div
+            class="px-3 text-light fs-24 fw-400 rounded-3 py-1 bg-primary me-3"
+          >
+            3
+          </div>
+          <div class="fs-24 fw-500">Payment</div>
+        </div>
+      </div>
+      <div class="card-body row mx-1">
+        <div
+          class="bg-light p-3 rounded-3 border border-primary d-flex justify-content-between align-items-center"
+        >
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <img src="../../../assets/chashIcon.svg" />
+            </div>
+            <div class="d-flex flex-column">
+              <span class="fs-16 fw-400">Cash Payment</span>
+              <span class="fs-12 fw-400">Defult Payment</span>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="mb-3">
-          <input
-            type="number"
-            class="form-control rounded"
-            placeholder="Mobile Number *"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Location Info -->
-  <div class="card rounded-25 glassEffect1 mt-5">
-    <div class="card-header bg-transparent border-0">
-      <div class="d-flex align-items-center my-2">
-        <div
-          class="px-3 text-light fs-24 fw-400 rounded-3 py-1 bg-primary me-3"
-        >
-          2
-        </div>
-        <div class="fs-24 fw-500">Address Info</div>
-      </div>
-    </div>
-    <div class="card-body row">
-      <div class="col-12">
-        <div class="mb-3">
-          <input
-            type="text"
-            class="form-control rounded"
-            placeholder="Street Address (Optional)"
-          />
-        </div>
-        <div class="mb-3">
-          <textarea
-            class="form-control"
-            placeholder="Notes"
-            aria-label="With textarea"
-          ></textarea>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Payment Info -->
-
-  <div class="card rounded-25 glassEffect1 mt-5">
-    <div class="card-header bg-transparent border-0">
-      <div class="d-flex align-items-center my-2">
-        <div
-          class="px-3 text-light fs-24 fw-400 rounded-3 py-1 bg-primary me-3"
-        >
-          3
-        </div>
-        <div class="fs-24 fw-500">Payment</div>
-      </div>
-    </div>
-    <div class="card-body row mx-1">
-      <div
-        class="bg-light p-3  rounded-3 border border-primary d-flex justify-content-between align-items-center"
-      >
-        <div class="d-flex align-items-center">
-          <div class="me-3">
-            <img src="../../../assets/chashIcon.svg" />
-          </div>
-          <div class="d-flex flex-column">
-            <span class="fs-16 fw-400">Cash Payment</span>
-            <span class="fs-12 fw-400">Defult Payment</span>
+          <div>
+            <img src="../../../assets/tickIcon.svg" />
           </div>
         </div>
-        <div>
-          <img src="../../../assets/tickIcon.svg" />
-        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>

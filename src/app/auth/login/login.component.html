@@ -12,14 +12,31 @@
     </div>
   </div>
   <div class="mb-4">
-    <form class="row">
+    <div
+      class="d-flex justify-content-center py-2 mb-3 bg-primary2 rounded text-light opacity-75"
+      [ngClass]="showError.show ? '' : 'd-none'"
+    >
+      {{ showError.message }}
+    </div>
+    <form class="row" [formGroup]="loginForm" (ngSubmit)="loginByEmail()">
       <div class="col-12">
         <div class="mb-3">
           <input
             type="email"
+            formControlName="email"
             class="form-control rounded"
             placeholder="Email "
+            (keypress)="hideError()"
           />
+          <small
+            class="text-danger p4 m-0 p-0"
+            *ngIf="
+              (loginForm.get('email')?.touched || submitted) &&
+              loginForm.get('email')?.errors
+            "
+          >
+            Enter Valid Email l example@email.com
+          </small>
         </div>
       </div>
       <div class="col-12">
@@ -27,8 +44,19 @@
           <input
             type="password"
             class="form-control rounded"
+            formControlName="password"
             placeholder="password"
+            (keypress)="hideError()"
           />
+          <small
+            class="text-danger p4 m-0 p-0"
+            *ngIf="
+              (loginForm.get('password')?.touched || submitted) &&
+              loginForm.get('password')?.errors
+            "
+          >
+            password must contain 6 characters *
+          </small>
         </div>
       </div>
       <div class="col-12">
