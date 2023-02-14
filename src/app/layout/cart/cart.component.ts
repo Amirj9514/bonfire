@@ -28,6 +28,7 @@ export class CartComponent implements OnInit {
   orderTypeId: any = '3';
 
   orderType: boolean = false;
+  taxAmount: number = 0;
 
   constructor(
     configs: NgbOffcanvasConfig,
@@ -51,6 +52,7 @@ export class CartComponent implements OnInit {
           if (this.dataFromLocal.cart === undefined) {
             this.cartData = [];
             this.calSubtotal();
+            this.calTax();
             this.calTotal();
           }
           if (this.offcanvasService.hasOpenOffcanvas() !== true) {
@@ -68,6 +70,7 @@ export class CartComponent implements OnInit {
         if (res.cart !== undefined) {
           this.cartData = res.cart;
           this.calSubtotal();
+          this.calTax();
           this.calTotal();
         }
         if (this.dataFromLocal.orderTypeId) {
@@ -104,6 +107,7 @@ export class CartComponent implements OnInit {
       this.cartData[index].quantity = this.cartData[index].quantity - 1;
       this.sharedS.insertData({ key: 'cart', val: this.cartData });
       this.calSubtotal();
+      this.calTax();
     }
   }
 
@@ -111,6 +115,7 @@ export class CartComponent implements OnInit {
     this.cartData[index].quantity = this.cartData[index].quantity + 1;
     this.sharedS.insertData({ key: 'cart', val: this.cartData });
     this.calSubtotal();
+    this.calTax();
     this.calTotal();
   }
 
@@ -118,6 +123,7 @@ export class CartComponent implements OnInit {
     this.cartData.splice(index, 1);
     this.sharedS.insertData({ key: 'cart', val: this.cartData });
     this.calSubtotal();
+    this.calTax();
     this.calTotal();
   }
 
@@ -130,8 +136,16 @@ export class CartComponent implements OnInit {
     });
     this.subTotal = tota;
   }
+  calTax() {
+    this.taxAmount =
+      (this.dataFromLocal.restaurantDetail.tax_percent / 100) *
+      Math.floor(this.subTotal);
+
+    this.taxAmount = Math.round(this.taxAmount);
+    this.calTotal();
+  }
   calTotal() {
-    this.total = this.subTotal + this.deliveryFee;
+    this.total = this.subTotal + this.deliveryFee + this.taxAmount;
   }
 
   placeOrder() {

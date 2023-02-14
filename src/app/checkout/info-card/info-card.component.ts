@@ -34,6 +34,7 @@ export class InfoCardComponent implements OnInit {
   deliveryFee: any = 0;
 
   formSubmited: boolean = false;
+  taxAmount: number = 0;
 
   constructor(
     private sharedS: SharedService,
@@ -61,11 +62,7 @@ export class InfoCardComponent implements OnInit {
     this.getDataFromLocal();
     this.setDafaultVal();
 
-    this.mainS.placeOrdeSubject.subscribe((val: any) => {
-      this.calSubtotal();
-      this.calTotal();
-      this.addData();
-    });
+    this.mainS.placeOrdeSubject.subscribe((val: any) => {});
   }
 
   getDataFromLocal() {
@@ -109,10 +106,16 @@ export class InfoCardComponent implements OnInit {
   }
 
   addData() {
+    this.calSubtotal();
+    this.calTax();
+    this.calTotal();
     this.formSubmited = true;
     console.log(this.checkoutForm.valid);
+
     if (this.checkoutForm.valid === true) {
       let formData = this.checkoutForm.value;
+      console.log(this.checkoutForm.value);
+
       this.deliveryD = {
         town_id: '',
         town_block_id: 4,
@@ -143,6 +146,7 @@ export class InfoCardComponent implements OnInit {
           order_detail: this.cartData,
           sub_total: this.subTotal,
           total: this.total,
+          tax_amount: this.taxAmount,
         };
         this.calPlaceOrderAPI();
       } else {
@@ -164,11 +168,15 @@ export class InfoCardComponent implements OnInit {
             alert(res.ErrorMessage);
           }
         },
-        
+
         error: (err: any) => {
           alert(err.error.ErrorMessage);
         },
       });
+  }
+
+  edit() {
+    this.router.navigateByUrl('');
   }
 
   calSubtotal() {
@@ -180,7 +188,15 @@ export class InfoCardComponent implements OnInit {
     });
     this.subTotal = tota;
   }
+  calTax() {
+    this.taxAmount =
+      (this.dataFromLocal.restaurantDetail.tax_percent / 100) *
+      Math.floor(this.subTotal);
+
+    this.taxAmount = Math.round(this.taxAmount);
+    this.calTotal();
+  }
   calTotal() {
-    this.total = this.subTotal + this.deliveryFee;
+    this.total = this.subTotal + this.deliveryFee + this.taxAmount;
   }
 }

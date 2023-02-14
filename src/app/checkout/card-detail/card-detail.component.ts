@@ -11,6 +11,11 @@ export class CardDetailComponent implements OnInit {
   dataFromLocal: any;
 
   cartData: any[] = [];
+  subTotal: number = 0;
+  total: number = 0;
+  deliveryFee: number = 0;
+  taxAmount!: number;
+  restaurantDetail: any = {};
   constructor(private sharedS: SharedService, private mainS: MainService) {}
 
   ngOnInit(): void {
@@ -21,8 +26,10 @@ export class CardDetailComponent implements OnInit {
     this.sharedS.getData().subscribe({
       next: (res: any) => {
         this.dataFromLocal = res;
-
-        if (this.dataFromLocal.cart) {
+        this.calSubtotalH();
+        this.calTax();
+        this.restaurantDetail = this.dataFromLocal.restaurantDetail;
+        if (this.dataFromLocal.cart !== undefined) {
           this.cartData = this.dataFromLocal.cart;
         } else {
           this.cartData = [];
@@ -35,7 +42,29 @@ export class CardDetailComponent implements OnInit {
     let da = parseInt(item.quantity) * parseInt(item.price);
     return da;
   }
-  placeOrder() {
-    this.mainS.placeOrder(true);
+
+  calSubtotalH() {
+    let tota = 0;
+    this.cartData.map((item: any) => {
+      var subTotal = 0;
+      subTotal = parseInt(item.price) * parseInt(item.quantity) + subTotal;
+      tota = tota + subTotal;
+    });
+    this.subTotal = tota;
+    return this.subTotal;
+  }
+
+  calTax() {
+    this.taxAmount =
+      (this.dataFromLocal.restaurantDetail.tax_percent / 100) *
+      Math.floor(this.subTotal);
+
+    this.taxAmount = Math.round(this.taxAmount);
+    this.calTotal();
+    return this.taxAmount;
+  }
+  calTotal() {
+    this.total = this.subTotal + this.deliveryFee + this.taxAmount;
+    return this.total;
   }
 }

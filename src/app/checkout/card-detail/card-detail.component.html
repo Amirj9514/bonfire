@@ -6,8 +6,8 @@
       <div class="">
         <img src="../../../assets/Logo.png" />
       </div>
-      <span>1-College Block, Allama Iqbal Town</span>
-      <span>Tel # (042) 111 007 000</span>
+      <span>{{ restaurantDetail?.address }}</span>
+      <span>Tel # {{ restaurantDetail?.contact_number }}</span>
     </div>
     <div class="card-body">
       <table class="table table-borderless">
@@ -38,30 +38,22 @@
       <div class="fs-14 fw-500 my-3">
         <div class="d-flex justify-content-between">
           <span>SubTotal</span>
-          <span>1100</span>
+          <span>{{ calSubtotalH() }}</span>
         </div>
         <div class="d-flex justify-content-between">
           <span>Delivery Fee</span>
-          <span>100</span>
+          <span>{{ deliveryFee }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>Tax</span>
+          <span>{{ calTax() }}</span>
         </div>
         <div class="d-flex text-success justify-content-between">
           <span> Total</span>
-          <span>1200</span>
+          <span>{{ calTotal() }}</span>
         </div>
       </div>
-      <div class="d-flex flex-column">
-        <button
-        (click)="placeOrder()"
-          class="btn bg-primary2 text-light mb-2 rounded-pill fs-20 fw-400"
-        >
-          Place Order
-        </button>
-        <button
-          class="btn bg-primary2 opacity-25 rounded-pill text-light fs-20 fw-400"
-        >
-          Edit Order
-        </button>
-      </div>
+   
     </div>
   </div>
 </div>
