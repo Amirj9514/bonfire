@@ -61,9 +61,18 @@
       </div>
       <div class="col-12">
         <button
-          class="btn bg-primary2 py-2 mt-3 fs-16 fw-400 text-light w-100 rounded-3"
+          class="btn bg-primary py-2 mt-3 fs-16 fw-400 text-light w-100 rounded-3"
+          [disabled]="preLoder"
         >
-          Login
+          <span [ngClass]="preLoder ? 'd-none' : 'd-block'">Login</span>
+          <span
+            class="d-flex justify-content-center my-1"
+            [ngClass]="preLoder ? '' : 'd-none'"
+          >
+            <div class="spinner-grow spinner-grow-sm text-success mx-2"></div>
+            <div class="spinner-grow spinner-grow-sm text-secondary mx-2"></div>
+            <div class="spinner-grow spinner-grow-sm text-warning mx-2"></div>
+          </span>
         </button>
       </div>
     </form>

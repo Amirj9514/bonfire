@@ -1,7 +1,7 @@
 <nav
   class="d-flex justify-content-between align-items-center nav_bar px-4 fixed-top glassEffect1"
 >
-  <div>
+  <div routerLink="/" class="pointer">
     <img class="img-fluid" src="../../../assets/Logo.png" />
   </div>
   <div
@@ -19,10 +19,43 @@
     </div>
   </div>
   <div class="rightSide d-flex">
-    <button class="btn bg-primary2 text-light me-2 login_btn">
+    <button
+      *ngIf="dataFromLocal.user === undefined"
+      class="btn bg-primary2 text-light me-2 login_btn"
+      routerLink="/auth/login"
+    >
       <fa-icon [icon]="loginIcon" class=""></fa-icon>
       <span class="ms-2">Sign in / Register</span>
     </button>
+
+    <!-- <button
+      *ngIf="dataFromLocal.user !== undefined"
+      class="btn bg-primary2 text-light me-2 login_btn"
+    >
+      <fa-icon [icon]="loginIcon" class=""></fa-icon>
+      <span class="ms-2">{{
+        dataFromLocal.user?.first_name + "  " + dataFromLocal.user?.last_name
+      }}</span>
+    </button> -->
+
+    <div ngbDropdown *ngIf="dataFromLocal.user !== undefined">
+      <button
+        type="button"
+        class="btn bg-primary2 text-light me-2 login_btn"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        <fa-icon [icon]="loginIcon" class=""></fa-icon>
+        <span class="ms-2">{{
+          dataFromLocal.user?.first_name + "  " + dataFromLocal?.user?.last_name
+        }}</span>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem routerLink="/history">Order History</button>
+        <button ngbDropdownItem (click)="logout()">Log Out</button>
+      </div>
+    </div>
+
     <button
       class="btn btn-primary text-light cart_btn d-flex justify-content-center align-items-center position-relative"
       (click)="openCart()"

@@ -1,12 +1,8 @@
-import {
-  AfterContentInit,
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
+
 import {
   faLocationArrow,
   faBars,
@@ -56,6 +52,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private sharedS: SharedService,
     private mainS: MainService,
     configs: NgbOffcanvasConfig,
+    private router: Router,
     private offcanvasService: NgbOffcanvas
   ) {
     // Cart Position
@@ -162,6 +159,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   selectOrderType(data: any) {
     this.branchForm.get('order_type')?.setValue(data);
+  }
+
+  logout() {
+    this.sharedS.insertData({
+      key: 'user',
+      val: undefined,
+    });
+    this.router.navigateByUrl('/auth/login');
   }
 
   // location Modal open Function

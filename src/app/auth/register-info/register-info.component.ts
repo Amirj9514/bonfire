@@ -19,8 +19,10 @@ export class RegisterInfoComponent implements OnInit {
           '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
         ),
       ]),
-      password: new FormControl('', Validators.required),
-      rePass: new FormControl('', Validators.required),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
@@ -28,6 +30,10 @@ export class RegisterInfoComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    // console.log(this.registerForm.get('contactNo')?.valid);
+    console.log();
+    
+
+    console.log(this.registerForm?.valid);
+    console.log(this.registerForm?.value);
   }
 }

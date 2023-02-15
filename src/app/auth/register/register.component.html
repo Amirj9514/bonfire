@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <div class="mb-4">
     <div class="d-flex flex-column align-items-center justify-content-center">
       <div class="text-center text-secondary fs-24 fw-500">
@@ -49,4 +49,229 @@
       <img class="w-100 h-100" src="../../../assets/Mail.svg" />
     </div>
   </div>
+</div> -->
+<div class="container-fluid">
+  <div class="mb-4">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+      <div class="text-center text-secondary fs-24 fw-500">
+        <span class="">Welcome To Bonfire 👋🏻</span>
+      </div>
+      <div class="text-center text-secondary2">
+        <span class="fs-400 fw-14"
+          >Please fill your information and start the adventure
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="d-flex justify-content-center py-2 mb-3 bg-primary2 rounded text-light opacity-75"
+    [ngClass]="showError.show ? '' : 'd-none'"
+  >
+    {{ showError.message }}
+  </div>
+  <form class="row" [formGroup]="registerForm">
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('firstName')?.touched || submitted) &&
+            registerForm.get('firstName')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="First Name"
+          formControlName="firstName"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('firstName')?.touched || submitted) &&
+            registerForm.get('firstName')?.errors
+          "
+        >
+          Please Enter your First Name
+        </small>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('lastName')?.touched || submitted) &&
+            registerForm.get('lastName')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Last Name"
+          formControlName="lastName"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('lastName')?.touched || submitted) &&
+            registerForm.get('lastName')?.errors
+          "
+        >
+          Please Enter your Last Name
+        </small>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="email"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('email')?.touched || submitted) &&
+            registerForm.get('email')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Email"
+          formControlName="email"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('email')?.touched || submitted) &&
+            registerForm.get('email')?.errors
+          "
+        >
+          Email Feild is Required
+        </small>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="mb-3">
+        <label class="fs-12 fw-400"> Date Of Birth</label>
+        <input
+          type="date"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('dob')?.touched || submitted) &&
+            registerForm.get('dob')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Date Of Birth"
+          formControlName="dob"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('dob')?.touched || submitted) &&
+            registerForm.get('dob')?.errors
+          "
+        >
+          DOB Feild is Required
+        </small>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="text"
+          autocomplete="new-phone"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('contactNo')?.touched || submitted) &&
+            registerForm.get('contactNo')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Contact Number"
+          formControlName="contactNo"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('contactNo')?.touched || submitted) &&
+            registerForm.get('contactNo')?.errors
+          "
+        >
+          <li>Phone Number Feild is Required</li>
+          <li>Phone Number Must Contain 11 digits</li>
+        </small>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="mb-3">
+        <input
+          autoComplete="new-password"
+          type="text"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('password')?.touched || submitted) &&
+            registerForm.get('password')?.errors
+              ? ' border border-danger'
+              : 'border-0'
+          "
+          placeholder="Password"
+          formControlName="password"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('password')?.touched || submitted) &&
+            registerForm.get('password')?.errors
+          "
+        >
+          Password Must Contain 6 Characters
+        </small>
+      </div>
+    </div>
+    <!-- <div class="col-12">
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control rounded-12"
+          [ngClass]="
+            (registerForm.get('rePass')?.touched || submitted) &&
+            registerForm.get('rePass')?.errors
+              ? 'border border-danger'
+              : 'border-0'
+          "
+          placeholder="Confirm Password"
+          formControlName="rePass"
+        />
+        <small
+          class="text-danger p4 m-0 p-0"
+          *ngIf="
+            (registerForm.get('rePass')?.touched || submitted) &&
+            registerForm.get('rePass')?.errors
+          "
+        >
+          
+        </small>
+      </div>
+    </div> -->
+
+    <div class="col-12">
+      <button
+        type="submit"
+        (click)="onSubmit()"
+        class="btn bg-primary mt-3 rounded-12 w-100 text-light py-2"
+        [disabled]="preLoder" 
+      >
+        <span [ngClass]="preLoder ? 'd-none' : 'd-block'">Submit</span>
+        <span
+          class="d-flex justify-content-center my-1"
+          [ngClass]="preLoder ? '' : 'd-none'"
+        >
+          <div class="spinner-grow spinner-grow-sm text-success mx-2"></div>
+          <div class="spinner-grow spinner-grow-sm text-secondary mx-2"></div>
+          <div class="spinner-grow spinner-grow-sm text-warning mx-2"></div>
+        </span>
+      </button>
+    </div>
+  </form>
 </div>

@@ -11,6 +11,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 export class LoginComponent implements OnInit {
   dataFromLocal: any;
   submitted: boolean = false;
+  preLoder: boolean = false;
   showError: any = {
     show: false,
     message: '',
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (this.dataFromLocal.restaurantDetail) {
       if (this.loginForm.valid !== false) {
+        this.preLoder = true;
         let data = {
           email: this.loginForm.get('email')?.value,
           password: this.loginForm.get('password')?.value,
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit {
         };
         this.sharedS.sendPostRequest('WebUserLogin', data, null).subscribe({
           next: (res: any) => {
+            this.preLoder = false;
             if (res.Success === true) {
               this.sharedS.insertData({ key: 'user', val: res.Data });
               this.router.navigateByUrl('/');
@@ -66,6 +69,7 @@ export class LoginComponent implements OnInit {
             }
           },
           error: (err: any) => {
+            this.preLoder = false;
             this.showError = {
               show: true,
               message: err.error.ErrorMessage,
