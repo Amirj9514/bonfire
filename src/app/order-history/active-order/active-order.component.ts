@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-active-order',
   templateUrl: './active-order.component.html',
   styleUrls: ['./active-order.component.scss'],
 })
-export class ActiveOrderComponent implements OnInit {
+export class ActiveOrderComponent implements OnInit, OnDestroy {
+  $subscriptionOne!: Subscription;
+
   dataFromLoacal: any;
   allOrders: any[] = [];
   activeOrders: any[] = [];
@@ -22,7 +25,7 @@ export class ActiveOrderComponent implements OnInit {
     this.getDataFromLocal();
   }
   getDataFromLocal() {
-    this.shareS.getData().subscribe({
+    this.$subscriptionOne = this.shareS.getData().subscribe({
       next: (res: any) => {
         this.dataFromLoacal = res;
         if (this.dataFromLoacal.user === undefined) {
@@ -77,7 +80,7 @@ export class ActiveOrderComponent implements OnInit {
     return subtotal;
   }
 
-  // ngOnDestroy(): void {
-  //   this.dataFromLoacal.unsubscribe();
-  // }
+  ngOnDestroy(): void {
+    this.$subscriptionOne.unsubscribe();
+  }
 }

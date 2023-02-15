@@ -91,18 +91,18 @@ export class InfoCardComponent implements OnInit {
   }
   handleAddressChange(address: Address) {
     console.log(address.formatted_address);
-    console.log(address.geometry.location.lat());
-    console.log(address.geometry.location.lng());
+    console.log(address.geometry.location.lat().toString());
+    console.log(address.geometry.location.lng().toString());
 
     // store lat lng
 
     this.checkoutForm
       .get('latitude')
-      ?.setValue(address?.geometry?.location.lat());
+      ?.setValue(address?.geometry?.location.lat().toString());
 
     this.checkoutForm
       .get('longitude')
-      ?.setValue(address?.geometry?.location.lat());
+      ?.setValue(address?.geometry?.location.lng().toString());
   }
 
   addData() {
@@ -148,6 +148,7 @@ export class InfoCardComponent implements OnInit {
           total: this.total,
           tax_amount: this.taxAmount,
         };
+ 
         this.calPlaceOrderAPI();
       } else {
         this.router.navigateByUrl('/');

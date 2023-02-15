@@ -51,7 +51,7 @@
         }}</span>
       </button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem routerLink="/history">Order History</button>
+        <button ngbDropdownItem routerLink="/history">My Order History</button>
         <button ngbDropdownItem (click)="logout()">Log Out</button>
       </div>
     </div>
@@ -96,7 +96,11 @@
 
 <!-- Location Model -->
 <ng-template #content2 let-modal class="p-2">
-  <form [formGroup]="branchForm" (ngSubmit)="selectBranch()" class="p-2">
+  <form
+    [formGroup]="branchForm"
+    (ngSubmit)="selectBranch()"
+    class="p-2 position-relative"
+  >
     <div class="d-flex justify-content-center w-100">
       <img class="img-fluid" src=".././../../assets/Logo.png" />
     </div>
@@ -156,9 +160,24 @@
         (click)="selectBranch()"
         class="btn btn-primary py-2 w-100 text-light"
       >
-        Let's Go get some Food
+        <span [ngClass]="preLoader ? 'd-none' : 'd-block'">
+          Let's Go get some Food</span
+        >
+        <span
+          class="d-flex justify-content-center my-1"
+          [ngClass]="preLoader ? '' : 'd-none'"
+        >
+          <div class="spinner-grow spinner-grow-sm text-success mx-2"></div>
+          <div class="spinner-grow spinner-grow-sm text-secondary mx-2"></div>
+          <div class="spinner-grow spinner-grow-sm text-warning mx-2"></div>
+        </span>
       </button>
     </div>
+
+    <div
+      class="position-absolute overlay rounded-3"
+      [ngClass]="preLoader ? '' : 'd-none'"
+    ></div>
   </form>
 </ng-template>
 

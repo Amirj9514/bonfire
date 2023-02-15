@@ -33,7 +33,7 @@ export class PastOrderComponent implements OnInit {
     this.sharedS.getData().subscribe({
       next: (res: any) => {
         this.dataFromLoacal = res;
-        if (res.restaurantDetail !== undefined && res.cart !== undefined) {
+        if (res.restaurantDetail !== undefined && res.user !== undefined) {
           this.calHistoryApi();
         }
       },

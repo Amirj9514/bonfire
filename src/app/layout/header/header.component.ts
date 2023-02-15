@@ -34,6 +34,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   menuIcon = faBars;
   closeResult = '';
 
+  preLoader: boolean = false;
+
   dataFromLocal!: any;
   cartData: any[] = [];
 
@@ -120,15 +122,20 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   getAllMenu(branch_id: any) {
+    this.preLoader = true;
     let id = branch_id;
     this.sharedS
       .sendPostRequest(`WebAppMainData?branch_id=${id}&app_id=1`, null, null)
       .subscribe({
         next: (res: any) => {
+          this.preLoader = false;
           if (res.Success !== false) {
             this.restaurantDetail = res.Data;
             this.storeDataToLoc();
           }
+        },
+        error: (err: any) => {
+          this.preLoader = false;
         },
       });
   }
