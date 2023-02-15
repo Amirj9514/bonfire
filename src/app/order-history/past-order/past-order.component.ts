@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-past-order',
@@ -18,12 +19,58 @@ import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
   ],
 })
 export class PastOrderComponent implements OnInit {
+  allOrders: any;
+  prevOrders: any;
   downIcon = faChevronDown;
   disabled = false;
-  constructor(config: NgbAccordionConfig) {
+  dataFromLoacal: any;
+  constructor(config: NgbAccordionConfig, private sharedS: SharedService) {
     config.closeOthers = true;
     config.type = 'info';
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sharedS.getData().subscribe({
+      next: (res: any) => {
+        this.dataFromLoacal = res;
+        if (res.restaurantDetail !== undefined && res.cart !== undefined) {
+          this.calHistoryApi();
+        }
+      },
+    });
+  }
+  calHistoryApi() {
+    this.sharedS
+      .sendPostRequest(
+        `WebOrderHistory?branchId=${this.dataFromLoacal.restaurantDetail.id}&userId=${this.dataFromLoacal.user.id}`,
+        null,
+        null
+      )
+      .subscribe({
+        next: (res: any) => {
+          if (res.Success !== false) {
+            this.allOrders = res.Data;
+            this.getActiveOrder();
+          }
+        },
+        error: (err: any) => {
+          alert(err.error.ErrorMessage);
+        },
+      });
+  }
+
+  getActiveOrder() {
+    this.prevOrders = [];
+    this.allOrders.map((val: any) => {
+      if (val.status_id === '2') {
+        this.prevOrders.push(val);
+      }
+    });
+  }
+  calSubtotal(data: any) {
+    let subtotal = 0;
+
+    subtotal = parseInt(data.price) * parseInt(data.quantity);
+    return subtotal;
+  }
 }
