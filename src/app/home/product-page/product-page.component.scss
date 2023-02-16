@@ -47,17 +47,57 @@
     }
 
     .imgSize {
-        height: 375px;
+        max-height: 375px;
 
     }
 }
+
+
+
+
 
 @mixin banner--lg() {
-    .imgSize{
-        height: 295px !important;
+    .imgSize {
+        height: 295px;
     }
 }
 
+@mixin banner--xs() {
+
+
+    .card {
+        padding: 0px;
+
+        .card-body {
+            .menuName {
+                font-size: 14px !important;
+            }
+
+            .ingridient {
+                font-size: 12px !important;
+            }
+
+            .priceTag {
+                font-size: 10px !important;
+            }
+
+            .cartBtn {
+                font-size: 12px;
+            }
+        }
+    }
+
+
+    .imgSize {
+        height: 156px;
+    }
+}
+
+
+
+@media (max-width: 450px) {
+    @include banner--xs();
+}
 
 @media (min-width: 1300px) {
     @include banner--lg();

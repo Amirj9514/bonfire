@@ -8,8 +8,8 @@ export class MainService {
   activeCatSubject = new BehaviorSubject<any>(null);
 
   showCartSubject = new BehaviorSubject<boolean>(false);
+  showSidebarSubject = new BehaviorSubject<boolean>(false);
   newOrderSubject = new BehaviorSubject<any>({});
-
   placeOrdeSubject = new BehaviorSubject<boolean>(false);
   constructor() {}
 
@@ -27,5 +27,9 @@ export class MainService {
 
   placeOrder(data: boolean) {
     this.placeOrdeSubject.next(data);
+  }
+
+  showSidebar(data: boolean) {
+    this.showSidebarSubject.next(data);
   }
 }

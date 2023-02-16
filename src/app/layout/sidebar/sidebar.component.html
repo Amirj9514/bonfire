@@ -1,0 +1,45 @@
+<ng-template #sidebar id="sidebar" let-offcanvas>
+  <div class="offcanvas-header d-flex justify-content-end">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="offcanvas.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul>
+      <li
+        class="list"
+        *ngIf="dataFromLoacal?.user === undefined"
+        (click)="offcanvas.dismiss('Cross click')"
+        routerLink="/auth/login"
+      >
+        Login
+      </li>
+      <li
+        class="list"
+        *ngIf="dataFromLoacal?.user !== undefined"
+        (click)="offcanvas.dismiss('Cross click')"
+        routerLink="/"
+      >
+        Home
+      </li>
+      <li
+        class="list"
+        *ngIf="dataFromLoacal?.user !== undefined"
+        (click)="offcanvas.dismiss('Cross click')"
+        routerLink="/history"
+      >
+        My Order History
+      </li>
+      <li
+        *ngIf="dataFromLoacal?.user !== undefined"
+        (click)="offcanvas.dismiss('Cross click'); logout()"
+        class="bg-primary2 text-light"
+      >
+        Log out
+      </li>
+    </ul>
+  </div>
+</ng-template>

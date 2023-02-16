@@ -11,10 +11,12 @@
   <div class="container-fluid" id="data">
     <div id=""></div>
     <div class="" *ngFor="let items of productArr">
-      <div [id]="items.name" class="my-4 fs-24 fw-500">{{ items.name }}</div>
+      <div [id]="items.name" class="my-4 fs-24 fw-500">
+        {{ items.name }}
+      </div>
       <div class="row">
         <div
-          class="col-md-6 col-lg-6 col-xxl-4 my-3"
+          class="col-6 col-sm-6 col-md-6 col-lg-6 col-xxl-4 my-3"
           *ngFor="let menu of items.menuList"
         >
           <div class="card glassEffect1 h-100" (mouseenter)="cardData(items)">
@@ -26,22 +28,22 @@
             </div>
             <div class="card-body m-0 p-0 py-3 d-flex flex-column">
               <div class="row justify-content-between align-items-start mb-2">
-                <div class="col-9 d-flex flex-column">
-                  <span class="fs-20 fw-500">{{ menu.name }}</span>
-                  <span class="fs-14 fw-400 text-secondary2">{{
+                <div class="col-12 d-flex flex-column">
+                  <span class="fs-20 fw-500 menuName">{{ menu.name }}</span>
+                  <span class="fs-14 fw-400 text-secondary2 ingridient">{{
                     menu.ingridient
                   }}</span>
                 </div>
-                <div class="col-3 text-end">
+                <!-- <div class="col-3 text-end">
                   <span class="px-2 py-1 bg-secondary rounded-3 pointer">
                     <fa-icon class="text-light" [icon]="heartIcon"></fa-icon>
                   </span>
-                </div>
+                </div> -->
               </div>
               <div class="row mt-auto">
                 <div class="col-12 mb-2 d-flex align-items-center">
                   <div
-                    class="px-3 py-1 bg-primary2 rounded-25 text-light fs-14 fw-400"
+                    class="px-3 py-1 bg-primary2 rounded-25 text-light fs-14 fw-400 priceTag"
                   >
                     Rs.
                     <span>{{ menu.price }}</span>
@@ -52,7 +54,7 @@
                 </div>
                 <div class="col-12 my-2">
                   <button
-                    class="btn btn-primary w-100 text-light d-flex align-items-center justify-content-center rounded-25 py-2"
+                    class="btn btn-primary w-100 text-light d-flex align-items-center justify-content-center rounded-25 py-2 cartBtn"
                     (click)="addToCart(menu)"
                   >
                     <img src="../../../assets/cartIcon.svg" />

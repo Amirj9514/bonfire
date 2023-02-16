@@ -16,6 +16,11 @@
     border-radius: 25px;
     border: 3px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 20px rgba(255, 255, 255, 0.8);
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        height: 2px;
+    }
 
     span {
         font-size: 32px;
@@ -77,6 +82,7 @@
         align-items: center;
         overflow: auto;
 
+
         span {
             display: none;
         }
@@ -93,7 +99,7 @@
                 border-radius: 25px;
                 color: $whiteColor;
                 transition: all 0.2s;
-                pointer-events: none;
+
             }
         }
 

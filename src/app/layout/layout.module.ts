@@ -7,10 +7,11 @@ import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { CartComponent } from './cart/cart.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent, CartComponent],
+  declarations: [LayoutComponent, HeaderComponent, FooterComponent, CartComponent, SidebarComponent],
   imports: [CommonModule, LayoutRoutingModule, SharedModule],
 })
 export class LayoutModule {}

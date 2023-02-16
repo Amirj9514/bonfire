@@ -168,6 +168,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.branchForm.get('order_type')?.setValue(data);
   }
 
+  calSubtotal(data: any) {
+    let tota = 0;
+    this.cartData.map((item: any) => {
+      var subTotal = 0;
+      subTotal = parseInt(item.price) * parseInt(item.quantity) + subTotal;
+      tota = tota + subTotal;
+    });
+
+    return tota;
+  }
+
   logout() {
     this.sharedS.insertData({
       key: 'user',
@@ -207,5 +218,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   openCart() {
     this.mainS.showCart(true);
+  }
+
+  openSidebar() {
+    this.mainS.showSidebar(true);
   }
 }
