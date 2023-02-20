@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { environment } from 'src/environments/environment';
@@ -16,6 +16,8 @@ import { MenuItems } from 'src/app/shared/models/orderDetail';
 export class ProductPageComponent implements OnInit {
   searchIcon = faSearch;
   heartIcon = faHeart;
+  addIcon = faPlus;
+  removeIcon = faMinus;
   private fragment!: string;
 
   menuArr: any[] = [];
@@ -61,6 +63,17 @@ export class ProductPageComponent implements OnInit {
         }
       },
     });
+  }
+  @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
+    // var data = window.document.getElementById('data');
+    // console.log(data);
+    
+    var da = window.document.getElementsByClassName('data');
+    console.log(da);
+    
+    // for (let i = 0; i < da.length; i++) {
+    //   console.log(da[i]);
+    // }
   }
 
   cardData(data: any) {
@@ -108,6 +121,61 @@ export class ProductPageComponent implements OnInit {
       this.menuArr.push(data);
     }
 
+    this.SharedD.insertData({ key: 'cart', val: this.menuArr });
+  }
+
+  chkItem(data: any) {
+    let status = false;
+    if (this.menuArr && this.menuArr.length >= 1) {
+      for (let val of this.menuArr) {
+        if (val.id === data.id) {
+          status = true;
+          break;
+        } else {
+          status = false;
+        }
+      }
+    }
+    return status;
+  }
+
+  chkQyt(data: any) {
+    let status = 1;
+    if (this.menuArr && this.menuArr.length >= 1) {
+      for (let val of this.menuArr) {
+        if (val.id === data.id) {
+          status = val.quantity;
+
+          break;
+        } else {
+          status = 1;
+        }
+      }
+    }
+    return status;
+  }
+
+  decreaseQyt(data: any) {
+    if (this.menuArr) {
+      this.menuArr.map((menu: any) => {
+        if (menu.id === data.id) {
+          if (menu.quantity > 1) {
+            menu.quantity = menu.quantity - 1;
+          }
+        }
+      });
+
+      this.SharedD.insertData({ key: 'cart', val: this.menuArr });
+    }
+  }
+  increaseQyt(data: any) {
+    if (this.menuArr) {
+      this.menuArr.map((menu: any) => {
+        if (menu.id === data.id) {
+          menu.quantity = menu.quantity + 1;
+        }
+      });
+    }
     this.SharedD.insertData({ key: 'cart', val: this.menuArr });
   }
 }

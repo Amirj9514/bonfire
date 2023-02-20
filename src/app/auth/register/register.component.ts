@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
         this.sharedS.sendPostRequest('WebUserSignUp', data, null).subscribe({
           next: (res: any) => {
             this.preLoder = false;
-            console.log(res);
+            
             
             if (res.Success !== false) {
               this.sharedS.insertData({ key: 'user', val: res.Data });

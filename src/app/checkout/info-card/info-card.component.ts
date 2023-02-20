@@ -90,9 +90,9 @@ export class InfoCardComponent implements OnInit {
     }
   }
   handleAddressChange(address: Address) {
-    console.log(address.formatted_address);
-    console.log(address.geometry.location.lat().toString());
-    console.log(address.geometry.location.lng().toString());
+    // console.log(address.formatted_address);
+    // console.log(address.geometry.location.lat().toString());
+    // console.log(address.geometry.location.lng().toString());
 
     // store lat lng
 
@@ -110,11 +110,11 @@ export class InfoCardComponent implements OnInit {
     this.calTax();
     this.calTotal();
     this.formSubmited = true;
-    console.log(this.checkoutForm.valid);
+  
 
     if (this.checkoutForm.valid === true) {
       let formData = this.checkoutForm.value;
-      console.log(this.checkoutForm.value);
+    
 
       this.deliveryD = {
         town_id: '',

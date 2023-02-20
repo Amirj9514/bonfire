@@ -69,8 +69,6 @@ export class ActiveOrderComponent implements OnInit, OnDestroy {
         this.activeOrders.push(val);
       }
     });
-
-    console.log(this.activeOrders);
   }
 
   calSubtotal(data: any) {

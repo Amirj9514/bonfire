@@ -8,7 +8,7 @@
     class="d-flex align-items-center px-4 py-2 rounded-pill bg-light location_btn pointer"
     (click)="open(content2)"
   >
-    <div class="me-3">
+    <div class="me-3 locationLogo">
       <img src="../.././../assets/location.svg" />
     </div>
     <div class="d-flex flex-column">
@@ -81,7 +81,7 @@
 <!-- buttom Cart Nav-->
 
 <div
-  class="justify-content-between align-items-center px-3 py-2 cart_nav text-light"
+  class="justify-content-between align-items-center px-3 py-2 cart_nav text-light bg-primary2"
   [ngClass]="cartData.length > 0 ? 'd-flex' : 'd-none'"
   (click)="openCart()"
 >
@@ -91,7 +91,7 @@
   </div>
   <div>
     <span>View Cart</span>
-    <span>></span>
+    <span class="ps-1">></span>
   </div>
 </div>
 

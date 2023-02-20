@@ -2,3 +2,9 @@
     max-height: 400px !important;
     min-height: 100px;
 }
+
+::ng-deep {
+    .carousel-inner {
+        border-radius: 25px;
+    }
+}

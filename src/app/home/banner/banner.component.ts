@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCarouselModule,
+  NgbCarouselConfig,
+} from '@ng-bootstrap/ng-bootstrap';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -8,8 +11,14 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent implements OnInit {
-  image = [{ img: '../../../assets/banner1.png' }];
-  constructor() {}
+  image = [
+    { img: '../../../assets/banner1.png' },
+    { img: '../../../assets/banner2.png' },
+    { img: '../../../assets/banner3.png' },
+  ];
+  constructor(config: NgbCarouselConfig) {
+    config.showNavigationArrows = false;
+  }
 
   ngOnInit(): void {}
 }

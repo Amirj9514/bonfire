@@ -4,11 +4,11 @@
     class="glass_effect sidebar text-secondary px-3 mb-3"
     [ngClass]="offsetFlag ? '' : 'fixedSide_bar'"
   >
-    <span class="">All Categories</span>
+    <p class="cat">All Categories</p>
 
     <div
       *ngFor="let cat of allCategories"
-      class="mt-3 fs-16"
+      class="fs-16"
       [ngClass]="activeCat === cat.name ? 'active fw-500' : ' fw-400'"
       routerLink="/"
       [fragment]="cat.name"

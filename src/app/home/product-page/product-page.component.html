@@ -8,15 +8,14 @@
     />
   </div>
 
-  <div class="container-fluid" id="data">
-    <div id=""></div>
-    <div class="" *ngFor="let items of productArr">
-      <div [id]="items.name" class="my-4 fs-24 fw-500">
+  <div class="container-fluid data" id="data">
+    <div *ngFor="let items of productArr">
+      <div [id]="items.name" class="my-4 fs-24 fw-500 items">
         {{ items.name }}
       </div>
       <div class="row">
         <div
-          class="col-6 col-sm-6 col-md-6 col-lg-6 col-xxl-4 my-3"
+          class="col-6 col-sm-6 col-md-6 col-lg-6 col-xxl-4 my-3 m-0 px-1"
           *ngFor="let menu of items.menuList"
         >
           <div class="card glassEffect1 h-100" (mouseenter)="cardData(items)">
@@ -54,12 +53,36 @@
                 </div>
                 <div class="col-12 my-2">
                   <button
+                    *ngIf="chkItem(menu) === false"
                     class="btn btn-primary w-100 text-light d-flex align-items-center justify-content-center rounded-25 py-2 cartBtn"
                     (click)="addToCart(menu)"
                   >
                     <img src="../../../assets/cartIcon.svg" />
                     <span class="ms-2 fs-14 fw-400"> Add To Cart</span>
                   </button>
+
+                  <div
+                    class="d-flex justify-content-between"
+                    *ngIf="chkItem(menu)"
+                  >
+                    <button
+                      class="btn btn-primary fs-16 fw-600 px-2 py-1 text-light rounded-circle"
+                      (click)="decreaseQyt(menu)"
+                    >
+                      <fa-icon [icon]="removeIcon"></fa-icon>
+                    </button>
+                    <div
+                      class="d-flex justify-content-center align-items-center rounded-pill glassEffect1 w-50 py-1 text-center"
+                    >
+                      {{ chkQyt(menu) }}
+                    </div>
+                    <button
+                      (click)="increaseQyt(menu)"
+                      class="btn btn-primary fs-16 fw-600 px-2 py-1 text-light rounded-circle"
+                    >
+                      <fa-icon [icon]="addIcon"></fa-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
