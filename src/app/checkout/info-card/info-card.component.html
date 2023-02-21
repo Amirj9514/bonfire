@@ -189,11 +189,17 @@
       </button>
       <button
         (click)="addData()"
-        [disabled]="this.checkoutForm.valid === false ?true :false"
+        [disabled]="this.checkoutForm.valid === false ? true : false"
         class="btn bg-primary2 text-light mb-2 rounded-pill fs-20 fw-400 w-50"
       >
         Place Order
       </button>
     </div>
   </form>
+</div>
+
+<div [ngClass]="preLoader ? 'd-block' : 'd-none'" id="preloader">
+  <div id="loader">
+    <img src="../../../assets/preLoder.gif" height="300px; width:300px" />
+  </div>
 </div>

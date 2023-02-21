@@ -35,6 +35,7 @@ export class InfoCardComponent implements OnInit {
 
   formSubmited: boolean = false;
   taxAmount: number = 0;
+  preLoader: boolean = false;
 
   constructor(
     private sharedS: SharedService,
@@ -110,11 +111,9 @@ export class InfoCardComponent implements OnInit {
     this.calTax();
     this.calTotal();
     this.formSubmited = true;
-  
 
     if (this.checkoutForm.valid === true) {
       let formData = this.checkoutForm.value;
-    
 
       this.deliveryD = {
         town_id: '',
@@ -148,7 +147,7 @@ export class InfoCardComponent implements OnInit {
           total: this.total,
           tax_amount: this.taxAmount,
         };
- 
+
         this.calPlaceOrderAPI();
       } else {
         this.router.navigateByUrl('/');
@@ -157,13 +156,15 @@ export class InfoCardComponent implements OnInit {
   }
 
   calPlaceOrderAPI() {
+    this.preLoader = true;
     this.sharedS
       .sendPostRequest('WebPlaceOrder', this.orderDetail, null)
       .subscribe({
         next: (res: any) => {
+          this.preLoader = false;
           if (res.Success !== false) {
             this.sharedS.insertData({ key: 'cart', val: undefined });
-            alert('Order Place Successfully');
+            // alert('Order Place Successfully');
             this.router.navigateByUrl('/');
           } else {
             alert(res.ErrorMessage);
@@ -171,6 +172,7 @@ export class InfoCardComponent implements OnInit {
         },
 
         error: (err: any) => {
+          this.preLoader = false;
           alert(err.error.ErrorMessage);
         },
       });
@@ -198,6 +200,12 @@ export class InfoCardComponent implements OnInit {
     this.calTotal();
   }
   calTotal() {
-    this.total = this.subTotal + this.deliveryFee + this.taxAmount;
+    if (this.dataFromLocal.restaurantDetail) {
+      if (this.dataFromLocal.restaurantDetail.tax_include !== true) {
+        this.total = this.subTotal + this.deliveryFee + this.taxAmount;
+      } else {
+        this.total = this.subTotal + this.deliveryFee;
+      }
+    }
   }
 }

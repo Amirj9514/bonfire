@@ -1,65 +1,29 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SharedService } from 'src/app/shared/services/shared.service';
-import { Subscription } from 'rxjs';
+
+import { MainService } from 'src/app/shared/services/main.service';
 
 @Component({
   selector: 'app-active-order',
   templateUrl: './active-order.component.html',
   styleUrls: ['./active-order.component.scss'],
 })
-export class ActiveOrderComponent implements OnInit, OnDestroy {
-  $subscriptionOne!: Subscription;
-
+export class ActiveOrderComponent implements OnInit {
   dataFromLoacal: any;
-  allOrders: any[] = [];
-  activeOrders: any[] = [];
+  allOrders!: any[];
+  activeOrders!: any[];
 
-  constructor(
-    private shareS: SharedService,
-    private router: Router,
-    private activeRoute: ActivatedRoute
-  ) {}
+  constructor(private mainS: MainService) {}
 
   ngOnInit(): void {
-    this.getDataFromLocal();
-  }
-  getDataFromLocal() {
-    this.$subscriptionOne = this.shareS.getData().subscribe({
+    this.mainS.userAllOrderSubject.subscribe({
       next: (res: any) => {
-        this.dataFromLoacal = res;
-        if (this.dataFromLoacal.user === undefined) {
-          this.router.navigateByUrl('/auth/login');
-        } else if (this.dataFromLoacal.restaurantDetail === undefined) {
-          this.router.navigateByUrl('/');
-        } else if (
-          this.dataFromLoacal.user &&
-          this.dataFromLoacal.restaurantDetail
-        ) {
-          this.calHistoryApi();
+        this.allOrders = res;
+        if (this.allOrders && this.allOrders.length >= 1) {
+          this.getActiveOrder();
         }
       },
     });
-  }
-
-  calHistoryApi() {
-    this.shareS
-      .sendPostRequest(
-        `WebOrderHistory?branchId=${this.dataFromLoacal.restaurantDetail.id}&userId=${this.dataFromLoacal.user.id}`,
-        null,
-        null
-      )
-      .subscribe({
-        next: (res: any) => {
-          if (res.Success !== false) {
-            this.allOrders = res.Data;
-            this.getActiveOrder();
-          }
-        },
-        error: (err: any) => {
-          alert(err.error.ErrorMessage);
-        },
-      });
+    // this.getDataFromLocal();
   }
 
   getActiveOrder() {
@@ -76,9 +40,5 @@ export class ActiveOrderComponent implements OnInit, OnDestroy {
 
     subtotal = parseInt(data.price) * parseInt(data.quantity);
     return subtotal;
-  }
-
-  ngOnDestroy(): void {
-    this.$subscriptionOne.unsubscribe();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
+import { MainService } from 'src/app/shared/services/main.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
@@ -24,39 +25,20 @@ export class PastOrderComponent implements OnInit {
   downIcon = faChevronDown;
   disabled = false;
   dataFromLoacal: any;
-  constructor(config: NgbAccordionConfig, private sharedS: SharedService) {
+  constructor(config: NgbAccordionConfig, private mainS: MainService) {
     config.closeOthers = true;
     config.type = 'info';
   }
 
   ngOnInit(): void {
-    this.sharedS.getData().subscribe({
+    this.mainS.userAllOrderSubject.subscribe({
       next: (res: any) => {
-        this.dataFromLoacal = res;
-        if (res.restaurantDetail !== undefined && res.user !== undefined) {
-          this.calHistoryApi();
+        this.allOrders = res;
+        if (this.allOrders && this.allOrders.length >= 1) {
+          this.getActiveOrder();
         }
       },
     });
-  }
-  calHistoryApi() {
-    this.sharedS
-      .sendPostRequest(
-        `WebOrderHistory?branchId=${this.dataFromLoacal.restaurantDetail.id}&userId=${this.dataFromLoacal.user.id}`,
-        null,
-        null
-      )
-      .subscribe({
-        next: (res: any) => {
-          if (res.Success !== false) {
-            this.allOrders = res.Data;
-            this.getActiveOrder();
-          }
-        },
-        error: (err: any) => {
-          alert(err.error.ErrorMessage);
-        },
-      });
   }
 
   getActiveOrder() {

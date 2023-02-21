@@ -2,3 +2,9 @@
   <app-active-order></app-active-order>
   <app-past-order></app-past-order>
 </div>
+
+<div [ngClass]="preLoader ? 'd-block' : 'd-none'" id="preloader">
+  <div id="loader">
+    <img src="../../../assets/preLoder.gif" height="300px; width:300px" />
+  </div>
+</div>

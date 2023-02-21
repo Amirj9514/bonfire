@@ -11,6 +11,7 @@ export class MainService {
   showSidebarSubject = new BehaviorSubject<boolean>(false);
   newOrderSubject = new BehaviorSubject<any>({});
   placeOrdeSubject = new BehaviorSubject<boolean>(false);
+  userAllOrderSubject = new BehaviorSubject<any>([]);
   constructor() {}
 
   acticeCat(data: any) {
@@ -31,5 +32,9 @@ export class MainService {
 
   showSidebar(data: boolean) {
     this.showSidebarSubject.next(data);
+  }
+
+  userAllOrder(data: any) {
+    this.userAllOrderSubject.next(data);
   }
 }

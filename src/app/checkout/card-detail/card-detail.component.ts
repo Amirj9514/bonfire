@@ -64,7 +64,13 @@ export class CardDetailComponent implements OnInit {
     return this.taxAmount;
   }
   calTotal() {
-    this.total = this.subTotal + this.deliveryFee + this.taxAmount;
+    if (this.dataFromLocal.restaurantDetail) {
+      if (this.dataFromLocal.restaurantDetail.tax_include !== true) {
+        this.total = this.subTotal + this.deliveryFee + this.taxAmount;
+      } else {
+        this.total = this.subTotal + this.deliveryFee;
+      }
+    }
     return this.total;
   }
 }

@@ -69,7 +69,7 @@ export class ProductPageComponent implements OnInit {
     // console.log(data);
     
     var da = window.document.getElementsByClassName('data');
-    console.log(da);
+    // console.log(da);
     
     // for (let i = 0; i < da.length; i++) {
     //   console.log(da[i]);

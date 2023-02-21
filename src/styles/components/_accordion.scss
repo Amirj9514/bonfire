@@ -2,14 +2,14 @@
 
 
 .accordion {
-
     .accordion-item {
         border-radius: 25px;
         background: linear-gradient(137.53deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 99.08%) !important;
         box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 20px rgba(255, 255, 255, 0.8) !important;
         backdrop-filter: blur(100px) !important;
         border: none;
-
+        margin-bottom: 10px;
+        
         .accordion-header {
             box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 20px rgba(255, 255, 255, 0.8) !important;
             background-color: transparent;

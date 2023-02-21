@@ -63,11 +63,11 @@
       <img src="../../../assets/cartIcon.svg" />
       <span class="ms-2 text">View Cart</span>
       <span
-        *ngIf="cartData.length >= 1"
+        *ngIf="dataFromLocal?.cart?.length >= 1"
         class="position-absolute start-100 translate-middle badge rounded-pill bg-primary2"
         style="top: 10px"
       >
-        {{ cartData.length }}
+        {{ dataFromLocal?.cart?.length }}
         <!-- <span class="visually-hidden">unread messages</span> -->
       </span>
     </button>
@@ -82,12 +82,12 @@
 
 <div
   class="justify-content-between align-items-center px-3 py-2 cart_nav text-light bg-primary2"
-  [ngClass]="cartData.length > 0 ? 'd-flex' : 'd-none'"
+  [ngClass]="dataFromLocal?.cart?.length > 0 ? 'd-flex' : 'd-none'"
   (click)="openCart()"
 >
   <div class="d-flex flex-column">
-    <span>{{ cartData.length }} item</span>
-    <span>Rs. {{ calSubtotal(cartData) }}</span>
+    <span>{{ dataFromLocal?.cart?.length }} item</span>
+    <span>Rs. {{ calSubtotal(dataFromLocal?.cart) }}</span>
   </div>
   <div>
     <span>View Cart</span>
