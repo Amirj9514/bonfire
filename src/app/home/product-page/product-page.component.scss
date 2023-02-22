@@ -48,6 +48,7 @@
 
     .imgSize {
         max-height: 375px;
+        height: 375px;
 
     }
 }
@@ -58,7 +59,7 @@
 
 @mixin banner--lg() {
     .imgSize {
-        height: 295px;
+        height: 295px !important;
     }
 }
 
@@ -89,7 +90,7 @@
 
 
     .imgSize {
-        height: 156px;
+        height: 156px !important;
     }
 }
 

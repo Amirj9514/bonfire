@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/services/shared.service';
+declare const FB: any;
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataFromLocal();
+    FB.init({
+      appId: '406432459708823',
+      cookie: true,
+      xfbml: true,
+      version: 'v11.0',
+    });
   }
 
   getDataFromLocal() {
@@ -45,6 +52,54 @@ export class LoginComponent implements OnInit {
       message: '',
     };
   }
+
+  loginWithFacebook() {
+    FB.login((res: any) => {
+      if (res.authResponse) {
+        this.getFacebookData(res.authResponse);
+      }
+    });
+  }
+
+  getFacebookData(data: any) {
+    const fields = 'id,first_name,last_name,birthday,email';
+    const url = `https://graph.facebook.com/v12.0/me?fields=${fields}&access_token=${data.accessToken}`;
+
+    fetch(url).then((response) => {
+      response.json().then((data) => {
+        if (data) {
+          this.saveUser(data);
+        }
+      });
+    });
+  }
+
+  saveUser(data: any) {
+    let userData = {
+      login_type_id: 1,
+      social_app_id: data.id,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      branch_id: this.dataFromLocal.restaurantDetail.id,
+    };
+
+    this.sharedS
+      .sendPostRequest('WebSaveSocialUser', userData, 'N/A')
+      .subscribe({
+        next: (res: any) => {
+          if (res.Success !== false) {
+            this.sharedS.insertData({ key: 'user', val: res.Data });
+            this.router.navigateByUrl('/');
+          } else {
+            alert(res.ErrorMessage);
+          }
+        },
+        error: (err: any) => {
+          alert(err.error.ErrorMessage);
+        },
+      });
+  }
+
   loginByEmail() {
     this.submitted = true;
     if (this.dataFromLocal.restaurantDetail) {

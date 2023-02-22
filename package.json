@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
     "@popperjs/core": "^2.10.2",
+    "@types/facebook-js-sdk": "^3.3.6",
     "bootstrap": "^5.2.0",
     "ngx-google-places-autocomplete": "^2.0.5",
     "rxjs": "~7.5.0",

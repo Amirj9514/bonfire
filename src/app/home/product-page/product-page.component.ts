@@ -25,7 +25,7 @@ export class ProductPageComponent implements OnInit {
   menuItems = new MenuItems();
 
   imgUrl: any = environment.apiImg;
-
+  dataFromLoacal: any;
   productArr: any[] = [];
   catId: any = null;
 
@@ -51,6 +51,7 @@ export class ProductPageComponent implements OnInit {
     });
     this.SharedD.getData().subscribe({
       next: (res: any) => {
+        this.dataFromLoacal = res;
         if (res.restaurantDetail !== undefined) {
           this.productArr = res.restaurantDetail.lstCategory;
           if (res.cart !== undefined) {

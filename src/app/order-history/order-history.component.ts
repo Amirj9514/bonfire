@@ -19,7 +19,6 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
 
   constructor(
     private sharedS: SharedService,
-    private router: Router,
     private mainS: MainService
   ) {}
 

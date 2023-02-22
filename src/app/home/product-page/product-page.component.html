@@ -11,26 +11,26 @@
   <div class="container-fluid data" id="data">
     <div *ngFor="let items of productArr">
       <div [id]="items.name" class="my-4 fs-24 fw-500 items">
-        {{ items.name }}
+        {{ items?.name }}
       </div>
       <div class="row">
         <div
           class="col-6 col-sm-6 col-md-6 col-lg-6 col-xxl-4 my-3 m-0 px-1"
-          *ngFor="let menu of items.menuList"
+          *ngFor="let menu of items?.menuList"
         >
           <div class="card glassEffect1 h-100" (mouseenter)="cardData(items)">
             <div class="card-header imgSize m-0 p-0">
               <img
                 class="fluid-img h-100 w-100"
-                [src]="imgUrl + '1219/' + 'images/' + menu.image"
+                [src]="imgUrl + dataFromLoacal?.restaurantDetail?.id + '/images/' + menu?.image"
               />
             </div>
             <div class="card-body m-0 p-0 py-3 d-flex flex-column">
               <div class="row justify-content-between align-items-start mb-2">
                 <div class="col-12 d-flex flex-column">
-                  <span class="fs-20 fw-500 menuName">{{ menu.name }}</span>
+                  <span class="fs-20 fw-500 menuName">{{ menu?.name }}</span>
                   <span class="fs-14 fw-400 text-secondary2 ingridient">{{
-                    menu.ingridient
+                    menu?.ingridient
                   }}</span>
                 </div>
                 <!-- <div class="col-3 text-end">
@@ -45,7 +45,7 @@
                     class="px-3 py-1 bg-primary2 rounded-25 text-light fs-14 fw-400 priceTag"
                   >
                     Rs.
-                    <span>{{ menu.price }}</span>
+                    <span>{{ menu?.price }}</span>
                     <!-- <small class="text-decoration-line-through ms-2">{{
                       menu.price
                     }}</small> -->

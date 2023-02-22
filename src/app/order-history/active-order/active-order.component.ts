@@ -29,8 +29,10 @@ export class ActiveOrderComponent implements OnInit {
   getActiveOrder() {
     this.activeOrders = [];
     this.allOrders.map((val: any) => {
-      if (val.status_id !== '2' || val.status_id !== '8') {
-        this.activeOrders.push(val);
+      if (val.status_id !== '2') {
+        if (val.status_id !== '8') {
+          this.activeOrders.push(val);
+        }
       }
     });
   }
