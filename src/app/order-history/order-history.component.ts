@@ -17,10 +17,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
 
   preLoader: boolean = false;
 
-  constructor(
-    private sharedS: SharedService,
-    private mainS: MainService
-  ) {}
+  constructor(private sharedS: SharedService, private mainS: MainService) {}
 
   ngOnInit(): void {
     this.getDataFromLoc();
@@ -30,12 +27,9 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
     this.sharedS.getData().subscribe({
       next: (res: any) => {
         this.dataFromLocal = res;
+        this.calHistoryApi();
       },
     });
-    if (this.dataFromLocal.restaurantDetail && this.dataFromLocal.user) {
-      this.calHistoryApi();
-    } else {
-    }
   }
 
   calHistoryApi() {

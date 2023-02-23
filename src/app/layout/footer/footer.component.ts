@@ -1,14 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { faGooglePlay, faApple } from '@fortawesome/free-brands-svg-icons';
+import { SharedService } from 'src/app/shared/services/shared.service';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  googleIcon = faGooglePlay;
-  appleIcon = faApple;
-  constructor() {}
+  dataFormLoacal: any;
+  restaurantDetail: any;
 
-  ngOnInit(): void {}
+  dat: string = '01/01/11 ,  23:03 ';
+  constructor(private sharedS: SharedService) {}
+
+  ngOnInit(): void {
+    this.getDataFromLoc();
+  }
+
+  getDataFromLoc() {
+    this.sharedS.getData().subscribe((val: any) => {
+      this.dataFormLoacal = val;
+      if (this.dataFormLoacal.restaurantDetail) {
+        this.restaurantDetail = this.dataFormLoacal.restaurantDetail;
+      }
+    });
+  }
 }

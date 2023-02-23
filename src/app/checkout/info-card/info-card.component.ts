@@ -75,7 +75,7 @@ export class InfoCardComponent implements OnInit {
           this.cartData = this.dataFromLocal.cart;
         } else {
           this.cartData = [];
-          this.router.navigateByUrl('/');
+          // this.router.navigateByUrl('/');
         }
       },
     });
@@ -165,7 +165,7 @@ export class InfoCardComponent implements OnInit {
           if (res.Success !== false) {
             this.sharedS.insertData({ key: 'cart', val: undefined });
             // alert('Order Place Successfully');
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/history');
           } else {
             alert(res.ErrorMessage);
           }
@@ -179,7 +179,7 @@ export class InfoCardComponent implements OnInit {
   }
 
   edit() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('/');
   }
 
   calSubtotal() {

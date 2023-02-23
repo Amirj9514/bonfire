@@ -73,6 +73,7 @@
   <form class="row" [formGroup]="registerForm">
     <div class="col-12">
       <div class="mb-3">
+        <label class="fs-12 fw-400 mx-2 mt-1">First Name</label>
         <input
           type="text"
           class="form-control rounded-12"
@@ -99,6 +100,7 @@
 
     <div class="col-12">
       <div class="mb-3">
+        <label  class="fs-12 fw-400 mx-2 mt-1">Last Name</label>
         <input
           type="text"
           class="form-control rounded-12"
@@ -125,6 +127,7 @@
 
     <div class="col-12">
       <div class="mb-3">
+        <label  class="fs-12 fw-400 mx-2 mt-1">Email</label>
         <input
           type="email"
           class="form-control rounded-12"
@@ -151,7 +154,7 @@
 
     <div class="col-12">
       <div class="mb-3">
-        <label class="fs-12 fw-400"> Date Of Birth</label>
+        <label  class="fs-12 fw-400 mx-2 mt-1"> Date Of Birth</label>
         <input
           type="date"
           class="form-control rounded-12"
@@ -177,6 +180,7 @@
     </div>
     <div class="col-12">
       <div class="mb-3">
+        <label  class="fs-12 fw-400 mx-2 mt-1">Contact No </label>
         <input
           type="text"
           autocomplete="new-phone"
@@ -205,9 +209,10 @@
 
     <div class="col-12">
       <div class="mb-3">
+        <label  class="fs-12 fw-400 mx-2 mt-1">Password</label>
         <input
           autoComplete="new-password"
-          type="text"
+          type="password"
           class="form-control rounded-12"
           [ngClass]="
             (registerForm.get('password')?.touched || submitted) &&
@@ -260,7 +265,7 @@
         type="submit"
         (click)="onSubmit()"
         class="btn bg-primary mt-3 rounded-12 w-100 text-light py-2"
-        [disabled]="preLoder" 
+        [disabled]="preLoder"
       >
         <span [ngClass]="preLoder ? 'd-none' : 'd-block'">Submit</span>
         <span

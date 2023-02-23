@@ -1,6 +1,22 @@
 <div class="m-4">
   <app-active-order></app-active-order>
   <app-past-order></app-past-order>
+
+  <div
+    *ngIf="allOrders.length >= 1 && preLoader === false"
+    class="d-flex flex-column align-items-center justify-content-center"
+  >
+    <div class="mb-3">
+      <img class="img-fluid" src="../../assets/emptyIcon.svg" />
+    </div>
+    <div class="fs-42 fw-500 my-4">Your Plate is Empty</div>
+    <button
+      class="btn bg-primary2 rounded-25 text-light px-5 py-2 fs-32 fw-400"
+      routerLink="/"
+    >
+      Order Now
+    </button>
+  </div>
 </div>
 
 <div [ngClass]="preLoader ? 'd-block' : 'd-none'" id="preloader">

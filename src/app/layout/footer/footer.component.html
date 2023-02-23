@@ -1,4 +1,4 @@
-<div class="container-fluid mt-5 glassEffect1 rounded-25 absoluteBottom">
+<div class="container-fluid mt-5 pb-4 glassEffect1 rounded-25 absoluteBottom">
   <div class="row justify-content-between">
     <div class="col-lg-2 pt-4">
       <div class="d-flex align-items-center justify-content-center">
@@ -9,19 +9,19 @@
       <div>
         <div class="d-flex flex-column">
           <span class="fs-16 fw-500">PHONE</span>
-          <span class="fs-14 fw-400">(042) 111 007 000</span>
+          <span class="fs-14 fw-400">{{
+            restaurantDetail?.contact_number
+          }}</span>
         </div>
         <div class="d-flex flex-column">
           <span class="fs-16 fw-500">Email</span>
-          <span class="fs-14 fw-400">care@bonfire.com.pk</span>
+          <span class="fs-14 fw-400">{{
+            restaurantDetail?.contact_email
+          }}</span>
         </div>
         <div class="d-flex flex-column">
           <span class="fs-16 fw-500">ADDRESS</span>
-          <span class="fs-14 fw-400"
-            >Bonfire Allama Iqbal Town: Address: 1-College Block, Allama Iqbal
-            Town <br />
-            Bonfire Johar Town: 1-M JoharTown, Khokhar Chowk, Lahore</span
-          >
+          <span class="fs-14 fw-400">{{ restaurantDetail?.address }}</span>
         </div>
       </div>
     </div>
@@ -31,19 +31,29 @@
           <span>Download our App</span>
         </div>
 
-        <div class="mb-3">
+        <a
+          class="mb-3 pointer"
+          href="https://play.google.com/store/apps/details?id=com.findurmeal.bonfire"
+        >
           <img src="../../../assets/googlePlay.svg" />
-        </div>
-        <div>
+        </a>
+        <a
+          class="pointer"
+          href="https://apps.apple.com/pk/app/bonfire-restaurant/id1458647821"
+        >
           <img src="../../../assets/appStore.svg" />
-        </div>
+        </a>
       </div>
     </div>
     <div class="col-lg-2 pt-4">
       <div class="d-flex flex-column fs-16 fw-500">
         <span class="text-uppercase mb-2">Our Timings</span>
         <span class="mb-1">Monday - Sunday</span>
-        <span>11:00 AM - 11:00 PM</span>
+        <span *ngIf="restaurantDetail?.open_time"
+          >{{ "01/01/11 ," + restaurantDetail?.open_time | date : "shortTime" }}
+          -
+          {{ "01/01/11 ," + restaurantDetail?.close_time | date : "shortTime" }}
+        </span>
       </div>
     </div>
   </div>

@@ -161,7 +161,11 @@ export class CartComponent implements OnInit {
     if (auth !== true) {
       this.router.navigateByUrl('/auth/login');
     } else {
-      this.router.navigateByUrl('/checkout');
+      if (this.dataFromLocal.cart) {
+        this.router.navigateByUrl('/checkout');
+      } else {
+        this.router.navigateByUrl('/');
+      }
     }
   }
 
