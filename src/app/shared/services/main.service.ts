@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 export class MainService {
   activeCatSubject = new BehaviorSubject<any>(null);
 
+  activeMenuSubject = new BehaviorSubject<any>(null);
+
   showCartSubject = new BehaviorSubject<boolean>(false);
   showSidebarSubject = new BehaviorSubject<boolean>(false);
   newOrderSubject = new BehaviorSubject<any>({});
@@ -36,5 +38,9 @@ export class MainService {
 
   userAllOrder(data: any) {
     this.userAllOrderSubject.next(data);
+  }
+
+  activeMenuId(data: any) {
+    this.activeMenuSubject.next(data);
   }
 }

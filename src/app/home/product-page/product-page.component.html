@@ -7,10 +7,10 @@
       placeholder="Search products here...."
     />
   </div>
-
+  <div id="item-1"></div>
   <div class="container-fluid data" id="data">
     <div *ngFor="let items of productArr">
-      <div [id]="items.name" class="my-4 fs-24 fw-500 items">
+      <div class="my-4 fs-24 fw-500 items" [attr.id]="'item-' + items.id">
         {{ items?.name }}
       </div>
       <div class="row">
@@ -22,7 +22,12 @@
             <div class="card-header imgSize m-0 p-0">
               <img
                 class="fluid-img h-100 w-100"
-                [src]="imgUrl + dataFromLoacal?.restaurantDetail?.id + '/images/' + menu?.image"
+                [src]="
+                  imgUrl +
+                  dataFromLoacal?.restaurantDetail?.id +
+                  '/images/' +
+                  menu?.image
+                "
               />
             </div>
             <div class="card-body m-0 p-0 py-3 d-flex flex-column">

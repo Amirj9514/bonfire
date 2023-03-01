@@ -51,28 +51,67 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    if (this.dataFromLocal.restaurantDetail) {
+    let allData = this.dataFromLocal.allBranches;
+    let formData = this.registerForm.value;
+    if (this.dataFromLocal.restaurantDetail && allData) {
       if (this.registerForm.valid !== false) {
         this.preLoder = true;
-        let formData = this.registerForm.value;
+        allData.map((val: any) => {
+          let data = {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            cell_num: formData.contactNo,
+            date_birth: formData.dob,
+            password: formData.password,
+            branch_id: val.id,
+          };
+          this.createUser(data, formData);
+        });
+      }
+    } else {
+      this.router.navigateByUrl('/');
+    }
+  }
+
+  createUser(data: any, form: any) {
+    this.sharedS.sendPostRequest('WebUserSignUp', data, null).subscribe({
+      next: (res: any) => {
+      
+        if (res.Success === false) {
+          this.preLoder = false;
+          this.showError = {
+            show: true,
+            message: res.ErrorMessage,
+          };
+        } else {
+          this.loginUser(form, data.branch_id);
+        }
+      },
+      error: (err: any) => {
+        this.preLoder = false;
+        this.showError = {
+          show: true,
+          message: err.error.ErrorMessage,
+        };
+      },
+    });
+  }
+
+  loginUser(formData: any, id: any) {
+    if (this.dataFromLocal.restaurantDetail.id === id) {
+      if (this.dataFromLocal.restaurantDetail && this.showError.show !== true) {
         let data = {
-          first_name: formData.firstName,
-          last_name: formData.lastName,
           email: formData.email,
-          cell_num: formData.contactNo,
-          date_birth: formData.dob,
           password: formData.password,
           branch_id: this.dataFromLocal.restaurantDetail.id,
         };
-        this.sharedS.sendPostRequest('WebUserSignUp', data, null).subscribe({
+        this.sharedS.sendPostRequest('WebUserLogin', data, null).subscribe({
           next: (res: any) => {
             this.preLoder = false;
-            
-            
-            if (res.Success !== false) {
+            if (res.Success === true) {
               this.sharedS.insertData({ key: 'user', val: res.Data });
-               this.router.navigateByUrl('/');
+              this.router.navigateByUrl('/');
             } else {
               this.showError = {
                 show: true,
@@ -89,8 +128,6 @@ export class RegisterComponent implements OnInit {
           },
         });
       }
-    } else {
-      this.router.navigateByUrl('/');
     }
   }
 }

@@ -19,14 +19,13 @@ export class SidebarComponent implements OnInit {
   constructor(
     private SharedD: SharedService,
     private mainS: MainService,
-    private viewportScroller: ViewportScroller,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.getDataFromLocal();
-    this.changeActiveCat();
-    this.defaultActiveCat(this.allCategories);
+    // this.changeActiveCat();
+    // this.defaultActiveCat(this.allCategories);
   }
 
   getDataFromLocal() {
@@ -34,38 +33,38 @@ export class SidebarComponent implements OnInit {
       next: (res: any) => {
         if (res.restaurantDetail !== undefined) {
           this.allCategories = res.restaurantDetail.lstCategory;
+          this.activeCat = this.allCategories[0]?.name;
         }
       },
     });
   }
   defaultActiveCat(data: any) {
-    this.route.fragment.subscribe((fragment) => {
-      if (fragment !== null) {
-        this.activeCat = fragment;
-      } else {
-        this.activeCat = data[0]?.name;
-      }
-    });
+    // this.route.fragment.subscribe((fragment) => {
+    //   if (fragment !== null) {
+    //     this.activeCat = fragment;
+    //   } else {
+    //
+    //   }
+    // });
   }
 
-  changeActiveCat() {
-    this.mainS.activeCatSubject.subscribe({
-      next: (res: any) => {
-        this.activeCat = res;
-        // this.viewportScroller.scrollToAnchor(this.activeCat);
-      },
-    });
-  }
+  // changeActiveCat() {
+  //   this.mainS.activeCatSubject.subscribe({
+  //     next: (res: any) => {
+  //       this.activeCat = res;
+  //       // this.viewportScroller.scrollToAnchor(this.activeCat);
+  //     },
+  //   });
+  // }
 
   selectCat(data: any) {
-    this.activeCat = data.id;
+    this.activeCat = data.name;
+    this.mainS.activeMenuId(data.id);
   }
 
   @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
     this.fullScroll = document.getElementById('data')?.scrollHeight;
     if (window.pageYOffset > 400) {
-     
-
       this.offsetFlag = false;
     } else {
       this.offsetFlag = true;

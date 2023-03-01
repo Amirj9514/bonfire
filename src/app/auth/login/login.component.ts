@@ -68,36 +68,42 @@ export class LoginComponent implements OnInit {
     fetch(url).then((response) => {
       response.json().then((data) => {
         if (data) {
-          this.saveUser(data);
+          let allDetail = this.dataFromLocal.allBranches;
+          if (allDetail && allDetail.length > 0) {
+            allDetail.map((val: any) => {
+              let userData = {
+                login_type_id: 1,
+                social_app_id: data.id,
+                first_name: data.first_name,
+                last_name: data.last_name,
+                branch_id: val.id,
+              };
+              this.saveUser(userData);
+            });
+          }
         }
       });
     });
   }
 
   saveUser(data: any) {
-    let userData = {
-      login_type_id: 1,
-      social_app_id: data.id,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      branch_id: this.dataFromLocal.restaurantDetail.id,
-    };
 
-    this.sharedS
-      .sendPostRequest('WebSaveSocialUser', userData, 'N/A')
-      .subscribe({
-        next: (res: any) => {
-          if (res.Success !== false) {
+    this.sharedS.sendPostRequest('WebSaveSocialUser', data, 'N/A').subscribe({
+      next: (res: any) => {
+        if (res.Success !== false) {
+          if (this.dataFromLocal.restaurantDetail.id === data.branch_id) {
             this.sharedS.insertData({ key: 'user', val: res.Data });
             this.router.navigateByUrl('/');
-          } else {
-            alert(res.ErrorMessage);
           }
-        },
-        error: (err: any) => {
-          alert(err.error.ErrorMessage);
-        },
-      });
+        } else {
+
+          alert(res.ErrorMessage);
+        }
+      },
+      error: (err: any) => {
+        alert(err.error.ErrorMessage);
+      },
+    });
   }
 
   loginByEmail() {

@@ -1,10 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ViewportScroller } from '@angular/common';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+
 import { faMinus, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { environment } from 'src/environments/environment';
-import { Router, ActivatedRoute } from '@angular/router';
+
 import { MainService } from 'src/app/shared/services/main.service';
 import { MenuItems } from 'src/app/shared/models/orderDetail';
 
@@ -13,12 +13,11 @@ import { MenuItems } from 'src/app/shared/models/orderDetail';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.scss'],
 })
-export class ProductPageComponent implements OnInit {
+export class ProductPageComponent implements OnInit, OnDestroy {
   searchIcon = faSearch;
   heartIcon = faHeart;
   addIcon = faPlus;
   removeIcon = faMinus;
-  private fragment!: string;
 
   menuArr: any[] = [];
 
@@ -36,18 +35,22 @@ export class ProductPageComponent implements OnInit {
 
   constructor(
     private SharedD: SharedService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private viewportScroller: ViewportScroller,
+
+    private elementRef: ElementRef,
     private mainS: MainService
   ) {}
 
   ngOnInit(): void {
-    this.route.fragment.subscribe((fragment) => {
-      if (fragment !== null) {
-        this.fragment = fragment;
-        this.viewportScroller.scrollToAnchor(this.fragment);
-      }
+
+    this.mainS.activeMenuSubject.subscribe({
+      next: (res: any) => {
+        if (res) {
+          const element = this.elementRef.nativeElement.querySelector(
+            '#item-' + res
+          );
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      },
     });
     this.SharedD.getData().subscribe({
       next: (res: any) => {
@@ -65,17 +68,9 @@ export class ProductPageComponent implements OnInit {
       },
     });
   }
-  @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
-    // var data = window.document.getElementById('data');
-    // console.log(data);
-    
-    var da = window.document.getElementsByClassName('data');
-    // console.log(da);
-    
-    // for (let i = 0; i < da.length; i++) {
-    //   console.log(da[i]);
-    // }
-  }
+
+
+
 
   cardData(data: any) {
     if (this.catId === null) {
@@ -178,5 +173,9 @@ export class ProductPageComponent implements OnInit {
       });
     }
     this.SharedD.insertData({ key: 'cart', val: this.menuArr });
+  }
+
+  ngOnDestroy(): void {
+    this.mainS.activeMenuId(1);
   }
 }

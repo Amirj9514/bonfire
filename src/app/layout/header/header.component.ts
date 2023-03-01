@@ -9,13 +9,7 @@ import {
   faMinus,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  NgbModalConfig,
-  NgbModal,
-  NgbOffcanvas,
-  NgbOffcanvasConfig,
-} from '@ng-bootstrap/ng-bootstrap';
-import { NewOrder } from 'src/app/shared/models/orderDetail';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MainService } from 'src/app/shared/services/main.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { environment } from 'src/environments/environment';
@@ -53,13 +47,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     public config: NgbModalConfig,
     private sharedS: SharedService,
     private mainS: MainService,
-    configs: NgbOffcanvasConfig,
-    private router: Router,
-    private offcanvasService: NgbOffcanvas
-  ) {
-    // Cart Position
-    configs.position = 'end';
 
+    private router: Router
+  ) {
     // Select Branch Form
     this.branchForm = new FormGroup({
       order_type: new FormControl('3'),
@@ -150,16 +140,73 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       key: 'cart',
       val: undefined,
     });
-    this.sharedS.insertData({
-      key: 'user',
-      val: undefined,
-    });
+    // this.sharedS.insertData({
+    //   key: 'user',
+    //   val: undefined,
+    // });
 
     if (this.dataFromLocal.cart === undefined) {
       this.cartData = [];
     }
+    if (this.dataFromLocal.user) {
+      this.reLogin(this.restaurantDetail, this.dataFromLocal.user);
+    } else {
+      this.modalService.dismissAll();
+    }
+  }
 
-    this.modalService.dismissAll();
+  reLogin(detail: any, user: any) {
+    if (this.dataFromLocal.restaurantDetail) {
+      let data = {};
+      if (this.dataFromLocal.user.login_type_id === '1') {
+        data = {
+          login_type_id: 1,
+          social_app_id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          branch_id: user.branch_id,
+        };
+        this.sharedS
+          .sendPostRequest('WebSaveSocialUser', data, 'N/A')
+          .subscribe({
+            next: (res: any) => {
+              if (res.Success !== false) {
+                this.sharedS.insertData({ key: 'user', val: res.Data });
+                this.modalService.dismissAll();
+              } else {
+                alert('Please Register your self first ');
+                this.router.navigateByUrl('/auth/login');
+              }
+            },
+            error: (err: any) => {
+              alert('Please Register your self first ');
+              this.router.navigateByUrl('/auth/login');
+            },
+          });
+      } else {
+        data = {
+          email: user.email,
+          password: user.password,
+          branch_id: detail.id,
+        };
+        this.sharedS.sendPostRequest('WebUserLogin', data, null).subscribe({
+          next: (res: any) => {
+            if (res.Success === true) {
+              this.sharedS.insertData({ key: 'user', val: res.Data });
+              this.modalService.dismissAll();
+            } else {
+              alert('Please Register your self first');
+              this.router.navigateByUrl('/auth/login');
+            }
+          },
+          error: (err: any) => {
+            alert('Please Register your self first');
+            this.router.navigateByUrl('/auth/login');
+            
+          },
+        });
+      }
+    }
   }
 
   // Function On Submit Of Form Of  Select Branch Model
@@ -198,6 +245,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         next: (res: any) => {
           if (res.Success === true) {
             this.branchesDetail = res.Data;
+            this.sharedS.insertData({
+              key: 'allBranches',
+              val: this.branchesDetail,
+            });
           }
         },
       });
