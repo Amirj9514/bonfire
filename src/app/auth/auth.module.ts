@@ -8,6 +8,10 @@ import { RegisterComponent } from './register/register.component';
 import { OptComponent } from './opt/opt.component';
 import { SharedModule } from '../shared/shared.module';
 import { RegisterInfoComponent } from './register-info/register-info.component';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,6 @@ import { RegisterInfoComponent } from './register-info/register-info.component';
     OptComponent,
     RegisterInfoComponent,
   ],
-  imports: [CommonModule, AuthRoutingModule, SharedModule],
+  imports: [CommonModule, AuthRoutingModule, SharedModule, SocialLoginModule],
 })
 export class AuthModule {}

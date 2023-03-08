@@ -166,6 +166,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           last_name: user.last_name,
           branch_id: user.branch_id,
         };
+
         this.sharedS
           .sendPostRequest('WebSaveSocialUser', data, 'N/A')
           .subscribe({
@@ -180,6 +181,32 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             },
             error: (err: any) => {
               alert('Please Register your self first ');
+              this.router.navigateByUrl('/auth/login');
+            },
+          });
+      } else if (this.dataFromLocal.user.login_type_id === '2') {
+        data = {
+          login_type_id: 2,
+          social_app_id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          branch_id: user.branch_id,
+        };
+
+        this.sharedS
+          .sendPostRequest('WebSaveSocialUser', data, 'N/A')
+          .subscribe({
+            next: (res: any) => {
+              if (res.Success !== false) {
+                this.sharedS.insertData({ key: 'user', val: res.Data });
+                this.modalService.dismissAll();
+              } else {
+                alert('Please Register your self first ');
+                this.router.navigateByUrl('/auth/login');
+              }
+            },
+            error: (err: any) => {
+              alert('Please Register your self first :(');
               this.router.navigateByUrl('/auth/login');
             },
           });
@@ -202,7 +229,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           error: (err: any) => {
             alert('Please Register your self first');
             this.router.navigateByUrl('/auth/login');
-            
           },
         });
       }

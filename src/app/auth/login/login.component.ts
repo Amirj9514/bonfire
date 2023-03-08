@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+
 declare const FB: any;
 
 @Component({
@@ -13,12 +16,21 @@ export class LoginComponent implements OnInit {
   dataFromLocal: any;
   submitted: boolean = false;
   preLoder: boolean = false;
+
+  private accessToken = '';
   showError: any = {
     show: false,
     message: '',
   };
+
+  // google login Var
+  userDetail: any = null;
   loginForm!: FormGroup;
-  constructor(private sharedS: SharedService, private router: Router) {
+  constructor(
+    private sharedS: SharedService,
+    private router: Router,
+    private authService: SocialAuthService
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -36,6 +48,34 @@ export class LoginComponent implements OnInit {
       xfbml: true,
       version: 'v11.0',
     });
+    this.authService.authState.subscribe({
+      next: (user: any) => {
+        this.userDetail = user;
+
+        if (this.userDetail) {
+          this.getGoogleUserData(this.userDetail);
+        }
+      },
+      error: (err) => {
+        this.userDetail = null;
+      },
+    });
+  }
+
+  getGoogleUserData(data: any) {
+    let allDetail = this.dataFromLocal.allBranches;
+    if (allDetail && allDetail.length > 0) {
+      allDetail.map((val: any) => {
+        let userData = {
+          login_type_id: 2,
+          social_app_id: data.id,
+          first_name: data.firstName,
+          last_name: data.lastName,
+          branch_id: val.id,
+        };
+        this.saveUser(userData);
+      });
+    }
   }
 
   getDataFromLocal() {
@@ -87,7 +127,6 @@ export class LoginComponent implements OnInit {
   }
 
   saveUser(data: any) {
-
     this.sharedS.sendPostRequest('WebSaveSocialUser', data, 'N/A').subscribe({
       next: (res: any) => {
         if (res.Success !== false) {
@@ -96,7 +135,6 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('/');
           }
         } else {
-
           alert(res.ErrorMessage);
         }
       },
@@ -142,5 +180,17 @@ export class LoginComponent implements OnInit {
       alert('Please First Select A Branch ');
       this.router.navigateByUrl('/');
     }
+  }
+
+  //------------------------------------------------------------
+  //               Login With Google
+  //------------------------------------------------------------
+
+  loginWithGoogle() {
+    this.authService
+      .getAccessToken(GoogleLoginProvider.PROVIDER_ID)
+      .then((accessToken) => {
+        this.accessToken = accessToken;
+      });
   }
 }
