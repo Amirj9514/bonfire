@@ -14,6 +14,7 @@ export class MainService {
   newOrderSubject = new BehaviorSubject<any>({});
   placeOrdeSubject = new BehaviorSubject<boolean>(false);
   userAllOrderSubject = new BehaviorSubject<any>([]);
+  activeCatViewSubject = new BehaviorSubject<any>(null);
   constructor() {}
 
   acticeCat(data: any) {

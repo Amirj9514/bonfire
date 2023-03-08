@@ -8,8 +8,13 @@
     />
   </div>
   <div id="item-1"></div>
-  <div class="container-fluid data" id="data">
-    <div *ngFor="let items of productArr">
+  <div
+    class="container-fluid data"
+    #cards
+    (scroll)="onScroll($event)"
+    id="data"
+  >
+    <div *ngFor="let items of productArr" [attr.id]="items.id">
       <div class="my-4 fs-24 fw-500 items" [attr.id]="'item-' + items.id">
         {{ items?.name }}
       </div>

@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataFromLocal();
-    // this.changeActiveCat();
+    this.changeActiveCat();
     // this.defaultActiveCat(this.allCategories);
   }
 
@@ -33,7 +33,7 @@ export class SidebarComponent implements OnInit {
       next: (res: any) => {
         if (res.restaurantDetail !== undefined) {
           this.allCategories = res.restaurantDetail.lstCategory;
-          this.activeCat = this.allCategories[0]?.name;
+          this.activeCat = this.allCategories[0]?.id;
         }
       },
     });
@@ -48,17 +48,17 @@ export class SidebarComponent implements OnInit {
     // });
   }
 
-  // changeActiveCat() {
-  //   this.mainS.activeCatSubject.subscribe({
-  //     next: (res: any) => {
-  //       this.activeCat = res;
-  //       // this.viewportScroller.scrollToAnchor(this.activeCat);
-  //     },
-  //   });
-  // }
+  changeActiveCat() {
+    this.mainS.activeCatSubject.subscribe({
+      next: (res: any) => {
+        this.activeCat = res;
+        // this.viewportScroller.scrollToAnchor(this.activeCat);
+      },
+    });
+  }
 
   selectCat(data: any) {
-    this.activeCat = data.name;
+    this.activeCat = data.id;
     this.mainS.activeMenuId(data.id);
   }
 

@@ -1,4 +1,11 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 
 import { faMinus, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -14,6 +21,7 @@ import { MenuItems } from 'src/app/shared/models/orderDetail';
   styleUrls: ['./product-page.component.scss'],
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
+  @ViewChild('cards') private parentRef!: ElementRef<HTMLElement>;
   searchIcon = faSearch;
   heartIcon = faHeart;
   addIcon = faPlus;
@@ -28,6 +36,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   productArr: any[] = [];
   catId: any = null;
 
+  viewId: any;
+
   // @HostLisner Var
 
   fullHeight: any;
@@ -41,7 +51,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-
     this.mainS.activeMenuSubject.subscribe({
       next: (res: any) => {
         if (res) {
@@ -69,15 +78,32 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: any) {
+    this.getChildren();
+  }
 
-
+  public getChildren() {
+    const parentElement = this.parentRef.nativeElement.children;
+    for (let i = 0; i < parentElement.length; i++) {
+      if (
+        parentElement[i].getBoundingClientRect().y < 100 &&
+        parentElement[i].getBoundingClientRect().y > 0
+      ) {
+        this.viewId = parseInt(parentElement[i].id);
+        this.mainS.acticeCat(this.viewId);
+      }
+    }
+  }
 
   cardData(data: any) {
+   
+
     if (this.catId === null) {
-      this.catId = data.name;
+      this.catId = data.id;
       this.mainS.acticeCat(this.catId);
     } else if (data.id !== this.catId) {
-      this.catId = data.name;
+      this.catId = data.id;
       this.mainS.acticeCat(this.catId);
     }
   }

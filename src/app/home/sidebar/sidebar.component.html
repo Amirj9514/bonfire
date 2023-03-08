@@ -9,9 +9,8 @@
     <div
       *ngFor="let cat of allCategories"
       class="fs-16"
-      [ngClass]="activeCat === cat.name ? 'active fw-500' : ' fw-400'"
+      [ngClass]="activeCat ===  cat.id ? 'active fw-500' : ' fw-400'"
       routerLink="/"
-      
       [id]="cat.id"
       (click)="selectCat(cat)"
     >
