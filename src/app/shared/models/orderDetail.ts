@@ -6,7 +6,7 @@ export class NewOrder {
   public user_id!: String;
   public delivery_details!: any;
   public order_detail!: any;
-
+  public delivery_charge: any;
   public tax_amount!: any;
 }
 

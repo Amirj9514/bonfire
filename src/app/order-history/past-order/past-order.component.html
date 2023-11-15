@@ -83,7 +83,7 @@
         <button ngbPanelToggle class="accordion-button">
           <div class="d-flex flex-column">
             <div class="fs-24 fw-500 text-secondary">
-              Order no # {{ data?.id }}
+              Order no # {{ data?.dailyOrderId }}
             </div>
             <div class="fs-16 mt-2 fw-400 text-secondary2">
               {{ data?.orderDate | date : "dd/MM/yyyy hh:mm a" }}
@@ -97,15 +97,15 @@
             class="row border-bottom pb-3 justify-content-between align-items-center"
             *ngFor="let items of data?.orderDetail"
           >
-            <div class="col-2">
+            <!-- <div class="col-2">
               <img
                 class="img-fluid rounded-3"
                 src="../../../assets/loginBg.png"
                 height="100px"
                 width="100px"
               />
-            </div>
-            <div class="col-8 m-0 p-0">
+            </div> -->
+            <div class="col-8 m-0 p-0 mx-3">
               <div class="row mb-2 align-items-start">
                 <div class="col-12 d-flex flex-column" [ngClass]="">
                   <span class="fs-14 fw-500">{{ items?.menuName }}</span>

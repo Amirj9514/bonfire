@@ -2,16 +2,11 @@
   <div class="mb-4">
     <span class="fs-32 fw-500">Active Orders</span>
   </div>
-  <div
-    class="card glassEffect1 border-0 rounded-25 mb-3"
-    *ngFor="let order of activeOrders"
-  >
-    <div
-      class="card-header bg-transparent d-flex justify-content-between align-items-center py-3 overflow-hidden"
-    >
+  <div class="card glassEffect1 border-0 rounded-25 mb-3" *ngFor="let order of activeOrders">
+    <div class="card-header bg-transparent d-flex justify-content-between align-items-center py-3 overflow-hidden">
       <div class="d-flex flex-column">
         <div class="fs-24 fw-500 text-secondary">
-          Order no # {{ order?.id }}
+          Order no # {{ order?.dailyOrderId }}
         </div>
         <div class="fs-16 fw-400 text-secondary2">
           {{ order?.orderDate | date : "dd/MM/yyyy hh:mm a" }}
@@ -22,22 +17,47 @@
       </div>
     </div>
     <div class="card-body my-0 py-0">
-      <div
-        class="row justify-content-between align-items-center mb-2 py-3 border-bottom border-light"
-        *ngFor="let items of order?.orderDetail"
-      >
-        <div class="col-2">
-          <img
-            class="img-fluid rounded-3"
-            src="../../../assets/loginBg.png"
-            height="100px"
-            width="100px"
-          />
-        </div>
-        <div class="col-8 m-0 p-0">
+      <div class="row justify-content-between align-items-center mb-2 py-3 border-bottom border-light"
+        *ngFor="let items of order?.orderDetail">
+        <!-- <div class="col-2">
+          <img class="img-fluid rounded-3" src="../../../assets/loginBg.png" height="100px" width="100px" />
+        </div> -->
+        <div class="col-8 m-0 p-0 mx-3">
           <div class="row mb-2 align-items-start">
             <div class="col-12 d-flex flex-column" [ngClass]="">
               <span class="fs-14 fw-500">{{ items?.menuName }}</span>
+
+              <div class="bold-lg lh-6 p2">
+                {{ items.menu_name }}
+                <!-- <ng-container *ngIf="
+                    order.order_detail_choice?.length > 0;
+                    then showName;
+                    else notShowName
+                  "></ng-container>
+                <ng-template #showName>({{ order.variation_name }})
+                </ng-template>
+                <ng-template #notShowName>
+                  <ng-container *ngIf="
+                      order.menu_variation_id === null;
+                      then choice2;
+                      else choice1
+                    ">
+                  </ng-container>
+                  <ng-template #choice2></ng-template>
+                  <ng-template #choice1>
+                    <ng-container *ngIf="
+                        order.menu_var_obj !== undefined;
+                        then cond1;
+                        else cond2
+                      ">
+                    </ng-container>
+                    <ng-template #cond1>
+                      ({{ order.menu_var_obj.variation_name }})
+                    </ng-template>
+                    <ng-template #cond2>({{ order.variation_name }})</ng-template>
+                  </ng-template>
+                </ng-template> -->
+              </div>
               <!-- <span class="fs-12 fw-400 text-secondary2"
                 >Small, Chicken, Bbq, Thin Crust</span
               > -->
@@ -47,7 +67,7 @@
             <div class="col-12 d-flex justify-content-between">
               <span class="text-secondary2 fs-12 fw-600">{{
                 items?.price
-              }}</span>
+                }}</span>
             </div>
           </div>
         </div>
@@ -73,15 +93,13 @@
         </div>
         <div class="d-flex justify-content-between fs-14 fw-500 mb-2">
           <span>Delivery Fee</span>
-          <span>Rs. 100</span>
+          <span>Rs. 0</span>
         </div>
         <div class="d-flex justify-content-between fs-14 fw-500 mb-2">
           <span>Tax</span>
           <span>Rs. {{ order.taxAmount }}</span>
         </div>
-        <div
-          class="d-flex justify-content-between fs-16 fw-500 mb-1 text-success"
-        >
+        <div class="d-flex justify-content-between fs-16 fw-500 mb-1 text-success">
           <span>Total</span>
           <span>Rs. {{ order.total }}</span>
         </div>

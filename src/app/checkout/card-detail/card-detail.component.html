@@ -1,12 +1,10 @@
 <div class="">
   <div class="card rounded-25 glassEffect1">
-    <div
-      class="card-header bg-transparent d-flex flex-column justify-content-center align-items-center"
-    >
+    <div class="card-header bg-transparent d-flex flex-column justify-content-center align-items-center">
       <div class="">
-        <img src="../../../assets/Logo.png" />
+        <img class="img-fluid rounded-circle" [src]="logoImg" width="90px" height="90px" alt="logo" />
       </div>
-      <span>{{ restaurantDetail?.address }}</span>
+      <span class="text-center">{{ restaurantDetail?.address }}</span>
       <span>Tel # {{ restaurantDetail?.contact_number }}</span>
     </div>
     <div class="card-body">
@@ -24,7 +22,82 @@
             <th scope="row">{{ i + 1 }}</th>
             <td>
               <div class="d-flex flex-column">
-                <span>{{ item.menu_name }}</span>
+                <span>
+                  <div class="bold-lg lh-6 p2">
+                    {{ item.menu_name }}
+                    <ng-container *ngIf="
+                        item.order_detail_choice?.length > 0;
+                        then showName;
+                        else notShowName
+                      "></ng-container>
+                    <ng-template #showName>({{ item.variation_name }})
+                    </ng-template>
+                    <ng-template #notShowName>
+                      <ng-container *ngIf="
+                          item.menu_variation_id === null;
+                          then choice2;
+                          else choice1
+                        ">
+                      </ng-container>
+                      <ng-template #choice2></ng-template>
+                      <ng-template #choice1>
+                        <ng-container *ngIf="
+                            item.menu_var_obj !== undefined;
+                            then cond1;
+                            else cond2
+                          ">
+                        </ng-container>
+                        <ng-template #cond1>
+                          ({{ item.menu_var_obj.variation_name }})
+                        </ng-template>
+                        <ng-template #cond2>({{ item.variation_name }})</ng-template>
+                      </ng-template>
+                    </ng-template>
+                  </div>
+                </span>
+
+
+                <ng-container *ngIf="
+                item.order_detail_choice?.length > 0;
+                then loggedIn;
+                else loggedOut
+              "></ng-container>
+
+                <ng-template #loggedIn>
+                  <span class="bold-sm lh-7 p3" *ngFor="let choice of item.order_detail_choice">
+                    <li>
+                      {{ choice.choice_name }}
+                    </li>
+                  </span>
+                </ng-template>
+                <ng-template #loggedOut>
+                  <ng-container *ngIf="
+                  item.menu_variation_id === null;
+                  then choice2;
+                  else choice1
+                ">
+                  </ng-container>
+                  <ng-template #choice1>
+                    <ng-container *ngIf="
+                    item.menu_var_obj !== undefined;
+                    then condition1;
+                    else condition2
+                  ">
+                    </ng-container>
+                    <ng-template #condition1>
+                      <span class="bold-sm lh-7 p3" *ngFor="
+                      let choiceGrp of item.menu_var_obj.var_choice_grp
+                    ">
+                        <li *ngFor="let choice of choiceGrp.choices">
+                          {{ choice.choice_name }}
+                        </li>
+                      </span>
+                    </ng-template>
+                    <ng-template #condition2></ng-template>
+                  </ng-template>
+                  <ng-template #choice2></ng-template>
+                </ng-template>
+
                 <small class="fs-10 fw-400">Rs. {{ item.price }}</small>
               </div>
             </td>
@@ -53,7 +126,7 @@
           <span>{{ calTotal() }}</span>
         </div>
       </div>
-   
+
     </div>
   </div>
 </div>

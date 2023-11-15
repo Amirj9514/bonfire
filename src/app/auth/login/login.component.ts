@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { environment } from 'src/environments/environment';
 
 declare const FB: any;
 
@@ -22,6 +23,11 @@ export class LoginComponent implements OnInit {
     show: false,
     message: '',
   };
+
+  
+  logoImg: any;
+
+  imageUrl: any = environment.apiImg;
 
   // google login Var
   userDetail: any = null;

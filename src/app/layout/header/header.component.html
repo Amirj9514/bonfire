@@ -1,13 +1,8 @@
-<nav
-  class="d-flex justify-content-between align-items-center nav_bar px-4 fixed-top glassEffect1"
->
+<nav class="d-flex justify-content-between align-items-center nav_bar px-4 fixed-top glassEffect1">
   <div routerLink="/" class="pointer">
-    <img class="img-fluid" src="../../../assets/Logo.png" />
+    <img class="img-fluid rounded-circle" [src]="logoImg" width="90px" height="90px" alt="logo" />
   </div>
-  <div
-    class="d-flex align-items-center px-4 py-2 rounded-pill bg-light location_btn pointer"
-    (click)="open(content2)"
-  >
+  <div class="d-flex align-items-center px-4 py-2 rounded-pill bg-light location_btn pointer" (click)="open(content2)">
     <div class="me-3 locationLogo">
       <img src="../.././../assets/location.svg" />
     </div>
@@ -19,11 +14,8 @@
     </div>
   </div>
   <div class="rightSide d-flex">
-    <button
-      *ngIf="dataFromLocal.user === undefined"
-      class="btn bg-primary2 text-light me-2 login_btn"
-      routerLink="/auth/login"
-    >
+    <button *ngIf="dataFromLocal.user === undefined" class="btn bg-primary2 text-light me-2 login_btn"
+      routerLink="/auth/login">
       <fa-icon [icon]="loginIcon" class=""></fa-icon>
       <span class="ms-2">Sign in / Register</span>
     </button>
@@ -39,16 +31,11 @@
     </button> -->
 
     <div ngbDropdown *ngIf="dataFromLocal.user !== undefined">
-      <button
-        type="button"
-        class="btn bg-primary2 text-light me-2 login_btn"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
+      <button type="button" class="btn bg-primary2 text-light me-2 login_btn" id="dropdownBasic1" ngbDropdownToggle>
         <fa-icon [icon]="loginIcon" class=""></fa-icon>
         <span class="ms-2">{{
-          dataFromLocal.user?.first_name + "  " + dataFromLocal?.user?.last_name
-        }}</span>
+          dataFromLocal.user?.first_name + " " + dataFromLocal?.user?.last_name
+          }}</span>
       </button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <button ngbDropdownItem routerLink="/history">My Order History</button>
@@ -58,15 +45,11 @@
 
     <button
       class="btn btn-primary text-light cart_btn d-flex justify-content-center align-items-center position-relative"
-      (click)="openCart()"
-    >
+      (click)="openCart()">
       <img src="../../../assets/cartIcon.svg" />
       <span class="ms-2 text">View Cart</span>
-      <span
-        *ngIf="dataFromLocal?.cart?.length >= 1"
-        class="position-absolute start-100 translate-middle badge rounded-pill bg-primary2"
-        style="top: 10px"
-      >
+      <span *ngIf="dataFromLocal?.cart?.length >= 1"
+        class="position-absolute start-100 translate-middle badge rounded-pill bg-primary2" style="top: 10px">
         {{ dataFromLocal?.cart?.length }}
         <!-- <span class="visually-hidden">unread messages</span> -->
       </span>
@@ -80,11 +63,8 @@
 
 <!-- buttom Cart Nav-->
 
-<div
-  class="justify-content-between align-items-center px-3 py-2 cart_nav text-light bg-primary2"
-  [ngClass]="dataFromLocal?.cart?.length > 0 ? 'd-flex' : 'd-none'"
-  (click)="openCart()"
->
+<div class="justify-content-between align-items-center px-3 py-2 cart_nav text-light bg-primary2"
+  [ngClass]="dataFromLocal?.cart?.length > 0 ? 'd-flex' : 'd-none'" (click)="openCart()">
   <div class="d-flex flex-column">
     <span>{{ dataFromLocal?.cart?.length }} item</span>
     <span>Rs. {{ calSubtotal(dataFromLocal?.cart) }}</span>
@@ -97,58 +77,36 @@
 
 <!-- Location Model -->
 <ng-template #content2 let-modal class="p-2">
-  <form
-    [formGroup]="branchForm"
-    (ngSubmit)="selectBranch()"
-    class="p-2 position-relative"
-  >
+  <form [formGroup]="branchForm" (ngSubmit)="selectBranch()" class="p-2 position-relative">
     <div class="d-flex justify-content-center w-100">
-      <img class="img-fluid" src=".././../../assets/Logo.png" />
+      <img class="img-fluid rounded-circle" [src]="logoImg" width="90px" height="90px" alt="logo" />
     </div>
-    <div
-      class="d-flex flex-column align-items-center justify-content-center my-3"
-    >
+    <div class="d-flex flex-column align-items-center justify-content-center my-3">
       <span class="fs-20 fw-700">Select your Order Type</span>
       <div class="d-flex mt-2">
-        <div
-          [ngClass]="
+        <div [ngClass]="
             branchForm.value.order_type === '3' ? 'activeOrderType' : 'bg-none'
-          "
-          class="px-3 py-2 rounded-pill pointer"
-          (click)="selectOrderType('3')"
-        >
+          " class="px-3 py-2 rounded-pill pointer" (click)="selectOrderType('3')">
           Delivery
         </div>
-        <div
-          [ngClass]="
+        <div [ngClass]="
             branchForm.value.order_type === '2' ? 'activeOrderType' : 'bg-none'
-          "
-          class="px-3 py-2 rounded-pill pointer"
-          (click)="selectOrderType('2')"
-        >
+          " class="px-3 py-2 rounded-pill pointer" (click)="selectOrderType('2')">
           Pick-Up
         </div>
       </div>
     </div>
-    <div
-      class="d-flex flex-column align-items-center justify-content-center mb-3"
-    >
+    <div class="d-flex flex-column align-items-center justify-content-center mb-3">
       <span class="fs-20 fw-700">Please Select Branch</span>
       <span class="fs-12 fw-400">Currently Selected Branch</span>
-      <div
-        class="px-3 py-1 mt-2 fs-16 fw-400 bg-primary2 rounded-pill text-light"
-      >
+      <div class="px-3 py-1 mt-2 fs-16 fw-400 bg-primary2 rounded-pill text-light">
         {{ dataFromLocal?.restaurantDetail?.name }}
       </div>
     </div>
 
     <div>
       <div class="mb-3">
-        <select
-          class="form-select"
-          aria-label="Default select example "
-          formControlName="selectedBranch"
-        >
+        <select class="form-select" aria-label="Default select example " formControlName="selectedBranch">
           <option value="" selected>Select the Branch</option>
           <option [value]="data.id" *ngFor="let data of branchesDetail">
             {{ data.name }}
@@ -156,18 +114,11 @@
         </select>
       </div>
 
-      <button
-        [disabled]="branchForm.valid === false ? true : false"
-        (click)="selectBranch()"
-        class="btn btn-primary py-2 w-100 text-light"
-      >
+      <button [disabled]="branchForm.valid === false ? true : false" (click)="selectBranch()"
+        class="btn btn-primary py-2 w-100 text-light">
         <span [ngClass]="preLoader ? 'd-none' : 'd-block'">
-          Let's Go get some Food</span
-        >
-        <span
-          class="d-flex justify-content-center my-1"
-          [ngClass]="preLoader ? '' : 'd-none'"
-        >
+          Let's Go get some Food</span>
+        <span class="d-flex justify-content-center my-1" [ngClass]="preLoader ? '' : 'd-none'">
           <div class="spinner-grow spinner-grow-sm text-success mx-2"></div>
           <div class="spinner-grow spinner-grow-sm text-secondary mx-2"></div>
           <div class="spinner-grow spinner-grow-sm text-warning mx-2"></div>
@@ -175,10 +126,7 @@
       </button>
     </div>
 
-    <div
-      class="position-absolute overlay rounded-3"
-      [ngClass]="preLoader ? '' : 'd-none'"
-    ></div>
+    <div class="position-absolute overlay rounded-3" [ngClass]="preLoader ? '' : 'd-none'"></div>
   </form>
 </ng-template>
 

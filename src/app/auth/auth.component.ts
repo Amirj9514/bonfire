@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { SharedService } from '../shared/services/shared.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +13,11 @@ export class AuthComponent implements OnInit {
   activeRoute: any = null;
 
   checkRoute: any = null;
-  constructor(private router: Router) {}
+
+  logoImg: any;
+
+  imageUrl: any = environment.apiImg;
+  constructor(private router: Router, private sharedS: SharedService) {}
 
   ngOnInit(): void {
     this.chgActiveForm();
@@ -20,6 +26,16 @@ export class AuthComponent implements OnInit {
     }
 
     this.checkRoute = this.router.url;
+
+    this.sharedS.getData().subscribe({
+      next: (res: any) => {
+        this.logoImg =
+          environment.apiImg +
+          res.allBranches[0].id +
+          '/images/' +
+          res.allBranches[0].logo;
+      },
+    });
   }
 
   chgActiveForm() {

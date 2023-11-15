@@ -27,7 +27,7 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
     this.sharedS.getData().subscribe({
       next: (res: any) => {
         this.dataFromLocal = res;
-        this.calHistoryApi();
+         this.calHistoryApi();
       },
     });
   }

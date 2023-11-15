@@ -1,0 +1,156 @@
+<div class="modal-body">
+    <div *ngIf="menu?.menu_variations &&  menu?.menu_variations.length>0">
+        <ngb-accordion #acc="ngbAccordion" activeIds="toggle">
+            <ngb-panel id="toggle">
+                <ng-template ngbPanelHeader>
+                    <button ngbPanelToggle class="accordion-button">
+                        <h3>Select Variation (Reuired*)</h3>
+                    </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="" *ngFor="let da of menu.menu_variations">
+                        <div class="form-check d-flex align-items-center" (click)="selectedVariation(da)">
+                            <input class="form-check-input me-2" type="radio" name="flexRadioDefault"
+                                id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+
+
+                                <span style="font-size: 20px; font-weight: 600;">{{da?.name}}
+                                </span>
+                                <span> ( RS:{{da?.price}})</span>
+
+
+
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+
+
+
+    <div *ngIf="showChoiceGrp">
+        <ngb-accordion #accd="ngbAccordion" [activeIds]="openArr">
+            <ngb-panel *ngFor="let choiceGrp of newSelectedVariation?.choice_groups ; let i = index" [id]="'p'+i">
+                <ng-template ngbPanelHeader>
+                    <button ngbPanelToggle class="accordion-button">
+                        <div class="d-flex flex-column">
+                            <h3>
+                                <span>{{choiceGrp?.name}}</span>
+                                <span *ngIf="choiceGrp?.min_choices > 0">(Reuired*)</span>
+                            </h3>
+                            <span *ngIf="!validateMessage(choiceGrp)">( You Can Select Upto :
+                                {{choiceGrp?.max_choices}})</span>
+                            <span class="text-danger" *ngIf="validateMessage(choiceGrp)">You can Select Minimum
+                                {{choiceGrp?.min_choices }} And Maxmimun {{choiceGrp?.max_choices }} Variation</span>
+                        </div>
+                    </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="" *ngFor="let choice of choiceGrp.choices; let index = index ">
+                        <div class="form-check d-flex align-items-center me-2"
+                            *ngIf="choiceGrp?.min_choices > 0 || choiceGrp?.max_choices <= 1">
+                            <input [checked]="selected(choice )" class="form-check-input me-3" [value]="choice.id"
+                                (click)="selecteChoice(choice , choiceGrp ,'radio')" type="checkbox"
+                                name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+
+
+                                <span style="font-size: 15px; font-weight: 600;">{{choice?.name}}
+                                </span>
+                                <span> ( RS:{{choice.price}})</span>
+                            </label>
+                        </div>
+                        <div class="form-check d-flex align-items-center me-2" *ngIf="choiceGrp?.max_choices > 1">
+                            <input [checked]="selected(choice )" class="form-check-input me-3"
+                                (click)="selecteChoice(choice , choiceGrp , 'checkbox')" type="checkbox" value=""
+                                [id]="'checkbox'+index">
+                            <label class="form-check-label" for="flexRadioDefault1">
+
+                                <span style="font-size: 15px; font-weight: 600;">{{choice?.name}}
+                                </span>
+                                <span> ( RS:{{choice.price}})</span>
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+
+
+
+
+    <div *ngIf="menu?.choice_group &&  menu?.choice_group.length>0">
+        <ngb-accordion #accd="ngbAccordion" [activeIds]="openArr">
+            <ngb-panel *ngFor="let choiceGrp of menu?.choice_group ; let i = index" [id]="'p'+i">
+                <ng-template ngbPanelHeader>
+                    <button ngbPanelToggle class="accordion-button">
+
+                        <div class="d-flex flex-column">
+                            <h3>
+                                <span>{{choiceGrp?.name}}</span>
+                                <span *ngIf="choiceGrp?.min_choices > 0">(Reuired*)</span>
+                            </h3>
+                            <!-- 
+                                
+                             -->
+                            <span *ngIf="!validateMessage(choiceGrp)">( You Can Select Upto :
+                                {{choiceGrp?.max_choices}})</span>
+                            <span *ngIf="validateMessage(choiceGrp)" class="text-danger">You can Select Minimum
+                                {{choiceGrp?.min_choices }} And Maxmimun {{choiceGrp?.max_choices }} Variation</span>
+                        </div>
+                    </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="" *ngFor="let choice of choiceGrp.choices; let index = index ">
+                        <div class="form-check d-flex align-items-center me-2"
+                            *ngIf="choiceGrp?.min_choices > 0 || choiceGrp?.max_choices <= 1">
+                            <input [checked]="selected(choice )" class="form-check-input me-3" [value]="choice.id"
+                                (click)="selecteChoice(choice , choiceGrp ,'radio')" type="checkbox"
+                                name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+
+
+                                <span style="font-size: 15px; font-weight: 600;">{{choice?.name}}
+                                </span>
+                                <span> ( RS:{{choice.price}})</span>
+                            </label>
+                        </div>
+
+                        <!--  -->
+                        <div class="form-check d-flex align-items-center me-2" *ngIf="choiceGrp?.max_choices > 1">
+                            <input [checked]="selected(choice )" class="form-check-input me-3"
+                                (click)="selecteChoice(choice , choiceGrp , 'checkbox')" type="checkbox" value=""
+                                [id]="'checkbox'+index">
+                            <label class="form-check-label" for="flexRadioDefault1">
+
+                                <span style="font-size: 15px; font-weight: 600;">{{choice?.name}}
+                                </span>
+                                <span> ( RS:{{choice.price}})</span>
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+</div>
+
+
+<div class="modal-footer">
+    <div class="row w-100">
+        <div class="col-6">
+            <button type="reset" (click)="closeModal() "
+                class="btn bg-primary text-light mb-2 me-3 rounded-pill fs-20 fw-400 w-100">Cancel</button>
+
+        </div>
+        <div class="col-6">
+            <button type="reset" (click)="onAddOrder()" [disabled]="disabledBtn()"
+                class="btn bg-primary2 text-light mb-2 me-3 rounded-pill fs-20 fw-400 w-100">Add To Cart</button>
+
+        </div>
+    </div>
+</div>

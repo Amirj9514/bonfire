@@ -1,39 +1,24 @@
 <div>
   <div class="search">
     <fa-icon class="fa-search" [icon]="searchIcon"></fa-icon>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Search products here...."
-    />
+    <input type="text" class="form-control" placeholder="Search products here...." />
   </div>
   <div id="item-1"></div>
-  <div
-    class="container-fluid data"
-    #cards
-    (scroll)="onScroll($event)"
-    id="data"
-  >
+  <div class="container-fluid data" #cards (scroll)="onScroll($event)" id="data">
     <div *ngFor="let items of productArr" [attr.id]="items.id">
       <div class="my-4 fs-24 fw-500 items" [attr.id]="'item-' + items.id">
         {{ items?.name }}
       </div>
       <div class="row">
-        <div
-          class="col-6 col-sm-6 col-md-6 col-lg-6 col-xxl-4 my-3 m-0 px-1"
-          *ngFor="let menu of items?.menuList"
-        >
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xxl-4 my-3 m-0 px-1" *ngFor="let menu of items?.menuList">
           <div class="card glassEffect1 h-100" (mouseenter)="cardData(items)">
             <div class="card-header imgSize m-0 p-0">
-              <img
-                class="fluid-img h-100 w-100"
-                [src]="
+              <img class="fluid-img h-100 w-100" [src]="
                   imgUrl +
                   dataFromLoacal?.restaurantDetail?.id +
                   '/images/' +
                   menu?.image
-                "
-              />
+                " />
             </div>
             <div class="card-body m-0 p-0 py-3 d-flex flex-column">
               <div class="row justify-content-between align-items-start mb-2">
@@ -41,7 +26,7 @@
                   <span class="fs-20 fw-500 menuName">{{ menu?.name }}</span>
                   <span class="fs-14 fw-400 text-secondary2 ingridient">{{
                     menu?.ingridient
-                  }}</span>
+                    }}</span>
                 </div>
                 <!-- <div class="col-3 text-end">
                   <span class="px-2 py-1 bg-secondary rounded-3 pointer">
@@ -51,9 +36,7 @@
               </div>
               <div class="row mt-auto">
                 <div class="col-12 mb-2 d-flex align-items-center">
-                  <div
-                    class="px-3 py-1 bg-primary2 rounded-25 text-light fs-14 fw-400 priceTag"
-                  >
+                  <div class="px-3 py-1 bg-primary2 rounded-25 text-light fs-14 fw-400 priceTag">
                     Rs.
                     <span>{{ menu?.price }}</span>
                     <!-- <small class="text-decoration-line-through ms-2">{{
@@ -62,34 +45,24 @@
                   </div>
                 </div>
                 <div class="col-12 my-2">
-                  <button
-                    *ngIf="chkItem(menu) === false"
+                  <button *ngIf="chkItem(menu) === false"
                     class="btn btn-primary w-100 text-light d-flex align-items-center justify-content-center rounded-25 py-2 cartBtn"
-                    (click)="addToCart(menu)"
-                  >
+                    (click)="addToCart(menu) ">
                     <img src="../../../assets/cartIcon.svg" />
                     <span class="ms-2 fs-14 fw-400"> Add To Cart</span>
                   </button>
 
-                  <div
-                    class="d-flex justify-content-between"
-                    *ngIf="chkItem(menu)"
-                  >
-                    <button
-                      class="btn btn-primary fs-16 fw-600 px-2 py-1 text-light rounded-circle"
-                      (click)="decreaseQyt(menu)"
-                    >
+                  <div class="d-flex justify-content-between" *ngIf="chkItem(menu)">
+                    <button class="btn btn-primary fs-16 fw-600 px-2 py-1 text-light rounded-circle"
+                      (click)="decreaseQyt(menu)">
                       <fa-icon [icon]="removeIcon"></fa-icon>
                     </button>
                     <div
-                      class="d-flex justify-content-center align-items-center rounded-pill glassEffect1 w-50 py-1 text-center"
-                    >
+                      class="d-flex justify-content-center align-items-center rounded-pill glassEffect1 w-50 py-1 text-center">
                       {{ chkQyt(menu) }}
                     </div>
-                    <button
-                      (click)="increaseQyt(menu)"
-                      class="btn btn-primary fs-16 fw-600 px-2 py-1 text-light rounded-circle"
-                    >
+                    <button (click)="increaseQyt(menu)"
+                      class="btn btn-primary fs-16 fw-600 px-2 py-1 text-light rounded-circle">
                       <fa-icon [icon]="addIcon"></fa-icon>
                     </button>
                   </div>
@@ -102,3 +75,15 @@
     </div>
   </div>
 </div>
+
+
+
+<ng-template #menuVar let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title my-3" id="modal-basic-title">Choose Variation</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+
+  <app-menu-variation [menu]="selectedMenu"></app-menu-variation>
+
+</ng-template>

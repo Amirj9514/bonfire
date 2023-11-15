@@ -35,6 +35,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   branchesDetail: any[] = [];
 
+  logoImg: any;
+
   imageUrl: any = environment.apiImg;
 
   orderType: any = false;
@@ -47,7 +49,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     public config: NgbModalConfig,
     private sharedS: SharedService,
     private mainS: MainService,
-
     private router: Router
   ) {
     // Select Branch Form
@@ -86,6 +87,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         if (res.cart !== undefined) {
           this.cartData = res.cart;
         }
+        this.logoImg =
+          environment.apiImg +
+          res.allBranches[0]?.id +
+          '/images/' +
+          res.allBranches[0]?.logo;
       },
     });
   }

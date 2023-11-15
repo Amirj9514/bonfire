@@ -13,7 +13,7 @@ export class SharedService {
 
   /** to get data this.sharedService.getData().subscribe((data: any) => {}) **/
   public getData() {
-    let storedData = localStorage.getItem('sharedData@Bonfire');
+    let storedData = localStorage.getItem('sharedData@HFC');
     this.sharedData.next(JSON.parse(storedData || '{}'));
     return this.sharedData.asObservable();
   }
@@ -25,7 +25,7 @@ export class SharedService {
       [data.key]: data.val,
     });
     localStorage.setItem(
-      'sharedData@Bonfire',
+      'sharedData@HFC',
       JSON.stringify(this.sharedData.value)
     );
   }

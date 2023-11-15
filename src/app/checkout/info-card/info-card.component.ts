@@ -18,12 +18,12 @@ import { Router } from '@angular/router';
 export class InfoCardComponent implements OnInit {
   dataFromLocal: any;
 
+  googleAddress: any;
   placeOrder: any = false;
   cartData: any[] = [];
   options: any = {
     componentRestrictions: { country: 'PAK' },
   };
-
   checkoutForm!: FormGroup;
 
   private orderDetail = new NewOrder();
@@ -36,6 +36,9 @@ export class InfoCardComponent implements OnInit {
   formSubmited: boolean = false;
   taxAmount: number = 0;
   preLoader: boolean = false;
+  deliverCheck: boolean = false;
+
+  hideAddressFeild: boolean = false;
 
   constructor(
     private sharedS: SharedService,
@@ -52,8 +55,8 @@ export class InfoCardComponent implements OnInit {
           '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
         ),
       ]),
-      latitude: new FormControl('', Validators.required),
-      longitude: new FormControl('', Validators.required),
+      latitude: new FormControl(''),
+      longitude: new FormControl(''),
       address: new FormControl(''),
       instructions: new FormControl(''),
     });
@@ -71,14 +74,46 @@ export class InfoCardComponent implements OnInit {
       next: (res: any) => {
         this.dataFromLocal = res;
 
+        if (res?.orderTypeId && res.orderTypeId === '2') {
+          this.removeValidator();
+        } else {
+          this.addValidator();
+        }
+
+        this.checkoutForm.updateValueAndValidity();
+
         if (this.dataFromLocal.cart) {
           this.cartData = this.dataFromLocal.cart;
         } else {
           this.cartData = [];
-          // this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/');
         }
       },
     });
+  }
+
+  removeValidator() {
+    this.checkoutForm.controls['latitude'].removeValidators([
+      Validators.required,
+    ]);
+    this.checkoutForm.controls['longitude'].removeValidators([
+      Validators.required,
+    ]);
+    this.checkoutForm.controls['latitude'].updateValueAndValidity();
+
+    this.checkoutForm.controls['longitude'].updateValueAndValidity();
+    this.hideAddressFeild = true;
+  }
+
+  addValidator() {
+    this.checkoutForm.controls['latitude'].addValidators([Validators.required]);
+    this.checkoutForm.controls['longitude'].addValidators([
+      Validators.required,
+    ]);
+    this.hideAddressFeild = false;
+    this.checkoutForm.controls['latitude'].updateValueAndValidity();
+
+    this.checkoutForm.controls['longitude'].updateValueAndValidity();
   }
 
   setDafaultVal() {
@@ -91,11 +126,7 @@ export class InfoCardComponent implements OnInit {
     }
   }
   handleAddressChange(address: Address) {
-    // console.log(address.formatted_address);
-    // console.log(address.geometry.location.lat().toString());
-    // console.log(address.geometry.location.lng().toString());
-
-    // store lat lng
+    this.googleAddress = address.formatted_address;
 
     this.checkoutForm
       .get('latitude')
@@ -104,15 +135,23 @@ export class InfoCardComponent implements OnInit {
     this.checkoutForm
       .get('longitude')
       ?.setValue(address?.geometry?.location.lng().toString());
+
+    this.getDeliveryChareges();
   }
 
   addData() {
+    if (this.dataFromLocal.orderTypeId == 2) {
+      this.sharedS.insertData({
+        key: 'delivery_chg',
+        val: 0,
+      });
+      this.deliveryFee = 0;
+    }
     this.calSubtotal();
     this.calTax();
     this.calTotal();
     this.formSubmited = true;
-
-    if (this.checkoutForm.valid === true) {
+    if (this.checkoutForm.valid) {
       let formData = this.checkoutForm.value;
 
       this.deliveryD = {
@@ -123,7 +162,9 @@ export class InfoCardComponent implements OnInit {
         last_name: formData.lastName,
         gender: '',
         mobile_no: formData.mobile_no,
-        address: formData.address,
+        address: `${this.googleAddress ? this.googleAddress : ''}  (${
+          formData.address
+        })`,
         longitude: formData.longitude,
         latitude: formData.latitude,
         instructions: formData.instructions,
@@ -142,17 +183,85 @@ export class InfoCardComponent implements OnInit {
           user_id: this.dataFromLocal.user.id,
           branch_id: this.dataFromLocal.restaurantDetail.id,
           delivery_details: this.deliveryD,
+          delivery_charge: this.deliveryFee,
           order_detail: this.cartData,
           sub_total: this.subTotal,
           total: this.total,
           tax_amount: this.taxAmount,
         };
 
-        this.calPlaceOrderAPI();
+        console.log(this.orderDetail);
+
+         this.calPlaceOrderAPI();
       } else {
         this.router.navigateByUrl('/');
       }
     }
+  }
+
+  checkAddressValue(event: any) {
+    let value = event.target.value;
+    if (!value) {
+      this.checkoutForm.controls['latitude'].setValue(null);
+      this.checkoutForm.controls['longitude'].setValue(null);
+      this.checkoutForm.controls['latitude'].updateValueAndValidity();
+      this.checkoutForm.controls['longitude'].updateValueAndValidity();
+    }
+  }
+  getDeliveryChareges() {
+    this.calSubtotal();
+    this.sharedS.insertData({
+      key: 'delivery_chg',
+      val: 0,
+    });
+    let apiParam: any;
+    apiParam = {
+      branch_id: this.dataFromLocal.restaurantDetail.id,
+      // latitude: this.checkoutForm.value.latitude,
+      // longitude: this.checkoutForm.value.longitude,
+      latitude: this.dataFromLocal.restaurantDetail.latitude,
+      longitude: this.dataFromLocal.restaurantDetail.longitude,
+      order_amt: this.subTotal,
+    };
+    this.preLoader = true;
+
+    this.sharedS
+      .sendPostRequest('GetDeliveryCharges', apiParam, null)
+      .subscribe({
+        next: (res: any) => {
+          this.preLoader = false;
+          if (res.Success) {
+            this.deliveryFee = parseInt(res.Data);
+            this.deliverCheck = true;
+            console.log(this.cartData);
+
+            this.sharedS.insertData({
+              key: 'delivery_chg',
+              val: parseInt(res.Data),
+            });
+
+            // this.orderDetail.delivery_charge = res.Data ? res.Data : 100;
+          } else {
+            this.checkoutForm.controls['latitude'].setValue(null);
+            this.checkoutForm.controls['longitude'].setValue(null);
+            this.checkoutForm.controls['latitude'].updateValueAndValidity();
+            this.checkoutForm.controls['longitude'].updateValueAndValidity();
+            alert(
+              res.ErrorMessage ? res.ErrorMessage : 'Something Went Wrong!'
+            );
+          }
+        },
+        error: (err: any) => {
+          this.preLoader = false;
+
+          this.checkoutForm.controls['latitude'].setValue(null);
+          this.checkoutForm.controls['longitude'].setValue(null);
+          this.checkoutForm.controls['latitude'].updateValueAndValidity();
+          this.checkoutForm.controls['longitude'].updateValueAndValidity();
+          alert(err.error.message ? err.error.message : 'Server Error');
+        },
+      });
+    // }
   }
 
   calPlaceOrderAPI() {

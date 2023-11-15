@@ -20,6 +20,8 @@ export class CartComponent implements OnInit {
   showCart: boolean = false;
   dataFromLocal!: any;
   imageUrl: any = environment.apiImg;
+
+  imgLink: any;
   cartData: any[] = [];
   subTotal: any = 0;
   deliveryFee: any = 0;
@@ -66,6 +68,11 @@ export class CartComponent implements OnInit {
   getDataFromLocal() {
     this.sharedS.getData().subscribe({
       next: (res: any) => {
+        if (res?.restaurantDetail) {
+          this.imgLink =
+            environment.apiImg + res?.restaurantDetail.id + '/images/';
+        }
+
         this.dataFromLocal = res;
         if (res.cart !== undefined) {
           this.cartData = res.cart;
@@ -93,6 +100,11 @@ export class CartComponent implements OnInit {
       this.sharedS.insertData({
         key: 'orderTypeId',
         val: '2',
+      });
+
+      this.sharedS.insertData({
+        key: 'delivery_chg',
+        val: 0,
       });
     } else {
       this.sharedS.insertData({

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from 'src/app/shared/services/main.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-card-detail',
@@ -16,6 +17,9 @@ export class CardDetailComponent implements OnInit {
   deliveryFee: number = 0;
   taxAmount!: number;
   restaurantDetail: any = {};
+  logoImg: any;
+
+  imageUrl: any = environment.apiImg;
   constructor(private sharedS: SharedService, private mainS: MainService) {}
 
   ngOnInit(): void {
@@ -25,9 +29,16 @@ export class CardDetailComponent implements OnInit {
   getDataFromLocal() {
     this.sharedS.getData().subscribe({
       next: (res: any) => {
+        this.logoImg =
+          environment.apiImg +
+          res.allBranches[0].id +
+          '/images/' +
+          res.allBranches[0].logo;
         this.dataFromLocal = res;
         this.calSubtotalH();
         this.calTax();
+
+        this.deliveryFee = res.delivery_chg ? res.delivery_chg : 0;
         this.restaurantDetail = this.dataFromLocal.restaurantDetail;
         if (this.dataFromLocal.cart !== undefined) {
           this.cartData = this.dataFromLocal.cart;

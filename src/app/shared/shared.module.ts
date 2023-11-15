@@ -6,6 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [],
@@ -17,8 +19,9 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     FormsModule,
     NgbDropdownModule,
-    
+    NgbAccordionModule,
     GooglePlaceModule,
+    NgbCollapseModule,
   ],
   exports: [
     FontAwesomeModule,
@@ -28,6 +31,8 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     NgbDropdownModule,
     FormsModule,
     GooglePlaceModule,
+    NgbAccordionModule,
+    NgbCollapseModule,
   ],
 })
 export class SharedModule {}

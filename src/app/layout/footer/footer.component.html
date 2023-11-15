@@ -2,7 +2,7 @@
   <div class="row justify-content-between">
     <div class="col-lg-2 pt-4">
       <div class="d-flex align-items-center justify-content-center">
-        <img class="img-fluid w-50 h-50" src="../../../assets/Logo.png" />
+        <img class="img-fluid rounded-circle" [src]="logoImg" width="90px" height="90px" alt="logo" />
       </div>
     </div>
     <div class="col-lg-5 pt-4">
@@ -11,13 +11,13 @@
           <span class="fs-16 fw-500">PHONE</span>
           <span class="fs-14 fw-400">{{
             restaurantDetail?.contact_number
-          }}</span>
+            }}</span>
         </div>
         <div class="d-flex flex-column">
           <span class="fs-16 fw-500">Email</span>
           <span class="fs-14 fw-400">{{
             restaurantDetail?.contact_email
-          }}</span>
+            }}</span>
         </div>
         <div class="d-flex flex-column">
           <span class="fs-16 fw-500">ADDRESS</span>
@@ -25,32 +25,25 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-2 pt-4">
+    <!-- <div class="col-lg-2 pt-4">
       <div class="d-flex flex-column">
         <div class="text-uppercase mb-2 fs-16 fw-500">
           <span>Download our App</span>
         </div>
 
-        <a
-          class="mb-3 pointer"
-          href="https://play.google.com/store/apps/details?id=com.findurmeal.bonfire"
-        >
+        <a class="mb-3 pointer" href="https://play.google.com/store/apps/details?id=com.findurmeal.bonfire">
           <img src="../../../assets/googlePlay.svg" />
         </a>
-        <a
-          class="pointer"
-          href="https://apps.apple.com/pk/app/bonfire-restaurant/id1458647821"
-        >
+        <a class="pointer" href="https://apps.apple.com/pk/app/bonfire-restaurant/id1458647821">
           <img src="../../../assets/appStore.svg" />
         </a>
       </div>
-    </div>
+    </div> -->
     <div class="col-lg-2 pt-4">
       <div class="d-flex flex-column fs-16 fw-500">
         <span class="text-uppercase mb-2">Our Timings</span>
         <span class="mb-1">Monday - Sunday</span>
-        <span *ngIf="restaurantDetail?.open_time"
-          >{{ "01/01/11 ," + restaurantDetail?.open_time | date : "shortTime" }}
+        <span *ngIf="restaurantDetail?.open_time">{{ "01/01/11 ," + restaurantDetail?.open_time | date : "shortTime" }}
           -
           {{ "01/01/11 ," + restaurantDetail?.close_time | date : "shortTime" }}
         </span>
